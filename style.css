@@ -335,17 +335,36 @@ textarea:focus {
 
 .hero-main h1 {
     font-size: clamp(2rem, 4vw, 2.5rem);
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 9px;
     color: #000;
 }
 
 .hero-sub {
     font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 550;
     margin: 18px 0 22px;
     color: #222;
 }
+.cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background: #0077ff;
+    animation: blink 0.8s step-end infinite;
+}
 
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
 .hero-path {
     display: inline-block;
     font-weight: 700;
@@ -501,7 +520,7 @@ textarea:focus {
     font-size: clamp(1.1rem, 1.5vw, 1.4rem);
     margin-bottom: 24px;
     line-height: 1.6;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.02em;
     color: #111;
 }
@@ -593,7 +612,7 @@ textarea:focus {
     font-size: clamp(1.1rem, 1.5vw, 1.4rem);
     margin-bottom: 24px;
     line-height: 1.6;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.02em;
     color: #111111;
 }
@@ -736,6 +755,7 @@ textarea:focus {
     box-shadow: 0 6px 18px rgba(30, 31, 31, 0.7);
     text-align: center;
     font-size: clamp(1.2rem, 2vw, 1.4rem);
+    font-weight: 600;
     color: #000000;
     position: relative;
     overflow: hidden;
@@ -788,6 +808,7 @@ textarea:focus {
     box-shadow: 0 6px 18px rgba(30, 31, 31, 0.7);
     text-align: center;
     font-size: clamp(1rem, 1.5vw, 1.4rem);
+    font-weight: 600;
     color: #000000;
     position: relative;
     overflow: hidden;

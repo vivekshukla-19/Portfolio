@@ -110,4 +110,54 @@
     });
 })();
 
+// Typed text animation
+
+document.addEventListener("DOMContentLoaded", function () {
+    const roles = [
+        "Final-year BCA Student",
+        "Future MCA",
+        "Web Developer",
+        "Python Enthusiast",
+        "Aspiring DevOps Engineer",
+        "Cloud Computing Learner"
+    ];
+
+    let i = 0, j = 0, current = "", isDeleting = false;
+    let isPaused = false;
+
+    function type() {
+        const textSpan = document.getElementById("typed-text");
+
+        if (!textSpan) return; // prevent crash
+
+        if (i < roles.length) {
+            if (!isDeleting) {
+                current = roles[i].slice(0, j++);
+                textSpan.textContent = current;
+
+                if (j > roles[i].length) {
+                    isPaused = true;
+                    setTimeout(() => {
+                        isDeleting = true;
+                        isPaused = false;
+                        type();
+                    }, 1500);
+                    return;
+                }
+            } else {
+                current = roles[i].slice(0, j--);
+                textSpan.textContent = current;
+
+                if (j < 0) {
+                    isDeleting = false;
+                    i = (i + 1) % roles.length;
+                }
+            }
+
+            setTimeout(type, isDeleting ? 50 : 120);
+        }
+    }
+
+    type();
+});
 
