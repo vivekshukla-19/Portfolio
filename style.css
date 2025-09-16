@@ -10,38 +10,49 @@ body {
     font-family: 'Inter', sans-serif;
     color: #222;
     min-height: 100vh;
-    /* White + Pink textured background */
+    /* White + Blue textured background */
     background:
-        /* soft pink highlight blobs that drift */
-        radial-gradient(900px 600px at 15% 20%, rgba(226, 82, 137, 0.18) 0%, rgba(226, 82, 137, 0.0) 60%),
-        radial-gradient(900px 600px at 85% 80%, rgba(255, 192, 203, 0.22) 0%, rgba(255, 192, 203, 0.0) 60%),
+        /* soft blue highlight blobs that drift */
+        radial-gradient(900px 600px at 15% 20%, rgba(66, 153, 225, 0.18) 0%, rgba(66, 153, 225, 0.0) 60%),
+        radial-gradient(900px 600px at 85% 80%, rgba(224, 242, 254, 0.22) 0%, rgba(224, 242, 254, 0.0) 60%),
         /* subtle diagonal texture */
-        repeating-linear-gradient(45deg, rgba(226, 82, 137, 0.05) 0px, rgba(226, 82, 137, 0.05) 2px, transparent 2px, transparent 6px),
-        /* white to very-light pink base */
-        linear-gradient(135deg, #ffffff 0%, #fff5f9 40%, #ffe3ee 100%);
+        repeating-linear-gradient(45deg, rgba(66, 153, 225, 0.05) 0px, rgba(66, 153, 225, 0.05) 2px, transparent 2px, transparent 6px),
+        /* white to very-light blue base */
+        linear-gradient(135deg, #ffffff 0%, #f0f6ff 40%, #e3f2fe 100%);
     background-size: 130% 130%, 130% 130%, 100% 100%, 100% 100%;
     animation: bgDrift 45s ease-in-out infinite alternate;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    
 }
 
 /* Ensure anchored sections don't sit under sticky navbar */
-html { scroll-padding-top: 84px; }
-section { scroll-margin-top: 84px; }
+html {
+    scroll-padding-top: 84px;
+}
+
+section {
+    scroll-margin-top: 84px;
+}
 
 @media (max-width: 700px) {
-    html { scroll-padding-top: 96px; }
-    section { scroll-margin-top: 96px; }
+    html {
+        scroll-padding-top: 96px;
+    }
+
+    section {
+        scroll-margin-top: 96px;
+    }
 }
 
 @keyframes bgDrift {
     0% {
         background-position: 0% 0%, 100% 100%, 0% 0%, 0% 0%;
     }
+
     50% {
         background-position: 18% 8%, 82% 86%, 0% 0%, 0% 0%;
     }
+
     100% {
         background-position: 36% 16%, 64% 72%, 0% 0%, 0% 0%;
     }
@@ -53,12 +64,13 @@ section { scroll-margin-top: 84px; }
     }
 }
 
-/* Reduce background animation on small screens for smoother scrolling */
 @media (max-width: 700px) {
-    body { animation: none; }
+    body {
+        animation: none;
+    }
 }
 
-/* Large section rendering optimization */
+/* Section rendering optimization */
 .about,
 .projects,
 .skills-tech,
@@ -73,7 +85,7 @@ section { scroll-margin-top: 84px; }
     right: 18px;
     bottom: 18px;
     display: none;
-    background: #e25289;
+    background: #4299e1;
     color: #fff;
     border: none;
     border-radius: 50%;
@@ -87,7 +99,7 @@ section { scroll-margin-top: 84px; }
 
 #toTop:hover,
 #toTop:focus {
-    background: #b32258;
+    background: #2563eb;
     outline: none;
 }
 
@@ -110,7 +122,7 @@ a:focus,
 button:focus,
 input:focus,
 textarea:focus {
-    outline: 3px solid #e25289;
+    outline: 3px solid #4299e1;
     outline-offset: 2px;
 }
 
@@ -123,7 +135,7 @@ textarea:focus {
     justify-content: space-between;
     align-items: center;
     padding: clamp(12px, 2vw, 16px) clamp(15px, 3vw, 30px);
-    background: rgba(220, 204, 204, 0.4);
+    background: rgba(204, 226, 255, 0.4);
     backdrop-filter: blur(6px);
     border-radius: 40px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
@@ -132,14 +144,14 @@ textarea:focus {
 
 .navbar.scrolled {
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-    background: rgba(220, 204, 204, 0.6);
+    background: rgba(204, 226, 255, 0.6);
 }
 
 .navbar-logo {
     font-family: 'Merriweather', serif;
     font-size: clamp(1.6rem, 2vw, 2rem);
     font-weight: 700;
-    color: #272626e1;
+    color: #2563ebe1;
     white-space: nowrap;
     text-decoration: none;
 }
@@ -154,7 +166,7 @@ textarea:focus {
 }
 
 .navbar-links li a {
-    color: #272626e1;
+    color: #2563ebe1;
     font-weight: 600;
     font-size: clamp(1rem, 1.2vw, 1.18rem);
     padding: 8px 15px;
@@ -165,17 +177,12 @@ textarea:focus {
 }
 
 .navbar-links li a:hover,
-.navbar-links li a:focus {
-    background: #e25289;
-    color: #fff;
-}
-
+.navbar-links li a:focus,
 .navbar-links li a.active {
-    background: #e25289;
+    background: #4299e1;
     color: #fff;
 }
 
-/* Animated underline accent */
 .navbar-links li a::after {
     content: "";
     position: absolute;
@@ -183,7 +190,7 @@ textarea:focus {
     right: 15px;
     bottom: 6px;
     height: 2px;
-    background: rgba(226, 82, 137, 0.0);
+    background: rgba(66, 153, 225, 0.0);
     transform: scaleX(0);
     transform-origin: center;
     transition: transform 0.25s ease, background 0.25s ease;
@@ -212,7 +219,7 @@ textarea:focus {
 .navbar-toggle span {
     height: 4px;
     width: 28px;
-    background: #272626e1;
+    background: #2563ebe1;
     margin: 2px 0;
     border-radius: 2px;
     display: block;
@@ -237,7 +244,7 @@ textarea:focus {
     .navbar-links {
         flex-direction: column;
         max-height: 0;
-        background: #f2b0b0;
+        background: #b0d1f2;
         border-radius: 0 0 18px 18px;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.11);
         padding: 0;
@@ -276,13 +283,14 @@ textarea:focus {
         width: 100%;
     }
 
-    /* Hamburger to X animation */
     .navbar-toggle[aria-expanded="true"] span:nth-child(1) {
         transform: translateY(6px) rotate(45deg);
     }
+
     .navbar-toggle[aria-expanded="true"] span:nth-child(2) {
         opacity: 0;
     }
+
     .navbar-toggle[aria-expanded="true"] span:nth-child(3) {
         transform: translateY(-6px) rotate(-45deg);
     }
@@ -314,7 +322,7 @@ textarea:focus {
     top: -30px;
     width: 160px;
     height: 160px;
-    background: radial-gradient(circle at 30% 30%, rgba(226,82,137,0.2), rgba(226,82,137,0));
+    background: radial-gradient(circle at 30% 30%, rgba(66, 153, 225, 0.2), rgba(66, 153, 225, 0));
     filter: blur(2px);
     z-index: -1;
 }
@@ -342,9 +350,9 @@ textarea:focus {
     display: inline-block;
     font-weight: 700;
     font-size: clamp(0.9rem, 1.6vw, 1rem);
-    color: #b32258;
-    background: rgba(226, 82, 137, 0.12);
-    border: 1px solid rgba(226, 82, 137, 0.25);
+    color: #2563eb;
+    background: rgba(66, 153, 225, 0.12);
+    border: 1px solid rgba(66, 153, 225, 0.25);
     padding: 6px 12px;
     border-radius: 999px;
     margin-bottom: 10px;
@@ -385,23 +393,26 @@ textarea:focus {
 
 /* Primary and secondary hero buttons */
 .hero-actions a.button:first-child {
-    background: #e25289;
-    border-color: #e25289;
+    background: #4299e1;
+    border-color: #4299e1;
     color: #fff;
 }
+
 .hero-actions a.button:first-child:hover,
 .hero-actions a.button:first-child:focus {
-    background: #b32258;
-    border-color: #b32258;
+    background: #2563eb;
+    border-color: #2563eb;
 }
+
 .hero-actions a.button:last-child {
     background: transparent;
     border-color: rgba(190, 171, 171, 1);
     color: #111;
 }
+
 .hero-actions a.button:last-child:hover,
 .hero-actions a.button:last-child:focus {
-    background: rgba(226, 82, 137, 0.12);
+    background: rgba(66, 153, 225, 0.12);
     color: #111;
 }
 
@@ -418,9 +429,10 @@ textarea:focus {
     width: clamp(200px, 28vw, 340px);
     height: clamp(200px, 28vw, 340px);
     border-radius: 50%;
-    overflow: hidden; /* visually remove background by cropping */
-    box-shadow: 0 12px 40px rgba(226, 82, 137, 0.25);
-    background: radial-gradient(80% 80% at 50% 40%, rgba(255,255,255,0.9), rgba(255,255,255,0.4) 70%, rgba(255,255,255,0));
+    overflow: hidden;
+    /* visually remove background by cropping */
+    box-shadow: 0 12px 40px rgba(66, 153, 225, 0.25);
+    background: radial-gradient(80% 80% at 50% 40%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.4) 70%, rgba(255, 255, 255, 0));
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
@@ -428,7 +440,7 @@ textarea:focus {
     content: "";
     position: absolute;
     inset: -10%;
-    background: radial-gradient(circle at 60% 40%, rgba(226,82,137,0.2), rgba(226,82,137,0));
+    background: radial-gradient(circle at 60% 40%, rgba(66, 153, 225, 0.2), rgba(66, 153, 225, 0));
     z-index: -1;
 }
 
@@ -440,14 +452,13 @@ textarea:focus {
     filter: contrast(1.06) saturate(1.05);
     transform: scale(1.12);
     transition: transform 0.3s ease;
-    /* Soft feathered circular mask to hide background edges */
-    -webkit-mask-image: radial-gradient(circle at 50% 40%, #000 56%, rgba(0,0,0,0.9) 62%, transparent 70%);
-            mask-image: radial-gradient(circle at 50% 40%, #000 56%, rgba(0,0,0,0.9) 62%, transparent 70%);
+    -webkit-mask-image: radial-gradient(circle at 50% 40%, #000 56%, rgba(0, 0, 0, 0.9) 62%, transparent 70%);
+    mask-image: radial-gradient(circle at 50% 40%, #000 56%, rgba(0, 0, 0, 0.9) 62%, transparent 70%);
 }
 
 .portrait-wrap:hover {
     transform: translateY(-2px);
-    box-shadow: 0 16px 48px rgba(226, 82, 137, 0.3);
+    box-shadow: 0 16px 48px rgba(66, 153, 225, 0.3);
 }
 
 @media (max-width: 700px) {
@@ -466,7 +477,7 @@ textarea:focus {
     }
 
     .hero-visual {
-        order: -1; /* show photo on top on small screens */
+        order: -1;
     }
 }
 
@@ -539,15 +550,15 @@ textarea:focus {
     border-radius: 24px;
     font-size: clamp(0.9rem, 1.3vw, 1rem);
     font-weight: 600;
-    color: #1b1e1e;
+    color: #2563eb;
     margin: 6px 6px 0 0;
     transition: background 0.3s ease, color 0.3s ease;
     cursor: default;
 }
 
 .skills-list span:hover {
-    color: #171616;
-    background-color: rgba(190, 173, 173, 0.15);
+    color: #111;
+    background-color: rgba(190, 173, 173, 0.13);
 }
 
 @media(max-width:700px) {
@@ -587,7 +598,7 @@ textarea:focus {
     color: #111111;
 }
 
-/* Unified section headings with pink accent underline */
+/* Unified section headings with blue accent underline */
 .about h2,
 .projects h2,
 .skills-tech h2,
@@ -614,14 +625,14 @@ textarea:focus {
     width: clamp(60px, 12vw, 120px);
     height: 4px;
     border-radius: 4px;
-    background: linear-gradient(90deg, rgba(226,82,137,1) 0%, rgba(226,82,137,0.35) 60%, rgba(226,82,137,0) 100%);
+    background: linear-gradient(90deg, rgba(66, 153, 225, 1) 0%, rgba(66, 153, 225, 0.35) 60%, rgba(66, 153, 225, 0) 100%);
 }
 
 /* Section intro paragraphs */
 .about .about-desc,
 .projects .projects-desc,
-.skills-tech > p,
-.contact > p {
+.skills-tech>p,
+.contact>p {
     color: #2a2a2a;
     line-height: 1.7;
 }
@@ -631,7 +642,6 @@ textarea:focus {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: clamp(16px, 3vw, 25px);
     justify-items: center;
-    /* Center grid items */
 }
 
 .project-card {
@@ -646,7 +656,6 @@ textarea:focus {
     min-height: 320px;
     width: 100%;
     max-width: 380px;
-    /* max card width */
 }
 
 .project-card:hover {
@@ -685,17 +694,16 @@ textarea:focus {
     border-radius: 24px;
     font-size: clamp(0.9rem, 1.3vw, 1rem);
     font-weight: 600;
-    color: #1b1e1e;
+    color: #2563eb;
     text-align: center;
     transition: background 0.3s ease, color 0.3s ease;
 }
 
 .project-card .project-actions a:hover {
-    background: #e25289;
+    background: #4299e1;
     color: #fff;
 }
 
-/* Responsive Adjustments */
 @media (max-width: 700px) {
     .projects-grid {
         grid-template-columns: 1fr;
@@ -740,7 +748,6 @@ textarea:focus {
     gap: clamp(8px, 1.5vw, 14px);
     margin-top: 18px;
     justify-content: center;
-    /* Center tech buttons */
 }
 
 .tech-stack button {
@@ -757,18 +764,18 @@ textarea:focus {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: rgba(255,255,255,0.6);
+    background: rgba(255, 255, 255, 0.6);
 }
 
 .tech-stack button i {
     font-size: 1.1em;
-    color: #e25289;
+    color: #4299e1;
 }
 
 .tech-stack button:hover {
     background: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 /* Contact Section */
@@ -787,7 +794,7 @@ textarea:focus {
     isolation: isolate;
 }
 
-/* Pink glow effect for each section (like About) */
+/* Blue glow effect for each section (like About) */
 .about::before,
 .projects::before,
 .skills-tech::before,
@@ -797,27 +804,25 @@ textarea:focus {
     inset: -10%;
     border-radius: inherit;
     background:
-        radial-gradient(800px 500px at 8% 10%, rgba(226, 82, 137, 0.10), rgba(226, 82, 137, 0) 60%),
-        radial-gradient(800px 500px at 92% 90%, rgba(255, 192, 203, 0.08), rgba(255, 192, 203, 0) 60%);
+        radial-gradient(800px 500px at 8% 10%, rgba(66, 153, 225, 0.10), rgba(66, 153, 225, 0) 60%),
+        radial-gradient(800px 500px at 92% 90%, rgba(224, 242, 254, 0.08), rgba(224, 242, 254, 0) 60%);
     z-index: -1;
 }
 
 /* Slightly lighter glow just for About section */
 .about::before {
     background:
-        radial-gradient(800px 500px at 8% 10%, rgba(226, 82, 137, 0.06), rgba(226, 82, 137, 0) 60%),
-        radial-gradient(800px 500px at 92% 90%, rgba(255, 192, 203, 0.05), rgba(255, 192, 203, 0) 60%);
+        radial-gradient(800px 500px at 8% 10%, rgba(66, 153, 225, 0.06), rgba(66, 153, 225, 0) 60%),
+        radial-gradient(800px 500px at 92% 90%, rgba(224, 242, 254, 0.05), rgba(224, 242, 254, 0) 60%);
 }
 
-
+/* Contact grid and form */
 .contact-grid {
     display: flex;
     gap: clamp(20px, 3vw, 50px);
     flex-wrap: wrap;
     justify-content: center;
-
 }
-
 
 .contact-form {
     flex: 1 1 360px;
@@ -827,14 +832,13 @@ textarea:focus {
     gap: clamp(15px, 2vw, 20px);
     max-width: 600px;
     margin: 0 auto;
-
 }
 
 .contact-form input,
 .contact-form textarea {
     padding: clamp(12px, 1.5vw, 16px);
     font-size: clamp(1rem, 1.5vw, 1.1rem);
-    border: 1.8px solid #b0c7cc;
+    border: 1.8px solid #b0d1f2;
     border-radius: 10px;
     outline: none;
     resize: vertical;
@@ -844,12 +848,12 @@ textarea:focus {
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-    border-color: #e25289;
-    box-shadow: 0 0 8px rgba(226, 82, 137, 0.5);
+    border-color: #4299e1;
+    box-shadow: 0 0 8px rgba(66, 153, 225, 0.5);
 }
 
 .contact-form button {
-    background: #e25289;
+    background: #4299e1;
     color: #fff;
     border: none;
     padding: clamp(12px, 1.5vw, 20px) clamp(20px, 3vw, 24px);
@@ -860,11 +864,10 @@ textarea:focus {
     transition: background 0.3s ease;
     max-width: 250px;
     align-self: center;
-    /* Center button */
 }
 
 .contact-form button:hover {
-    background: #b32258;
+    background: #2563eb;
 }
 
 /* Form status messages */
@@ -872,9 +875,11 @@ textarea:focus {
     margin-top: 8px;
     font-size: 0.95rem;
 }
+
 .form-status.success {
     color: #156f3d;
 }
+
 .form-status.error {
     color: #a3122f;
 }
@@ -916,8 +921,8 @@ textarea:focus {
     background: transparent;
     padding: 8px 16px;
     border-radius: 12px;
-    border: 2px solid #e25289;
-    color: #e25289;
+    border: 2px solid #4299e1;
+    color: #4299e1;
     transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     display: flex;
     align-items: center;
@@ -927,9 +932,9 @@ textarea:focus {
 }
 
 .contact-links a:hover {
-    background: #e25289;
+    background: #4299e1;
     color: #fff;
-    border-color: #b32258;
+    border-color: #2563eb;
 }
 
 @media (max-width: 700px) {
@@ -986,7 +991,7 @@ footer::before {
     right: 0;
     top: 0;
     height: 4px;
-    background: linear-gradient(90deg, rgba(226,82,137,0.8), rgba(226,82,137,0.2));
+    background: linear-gradient(90deg, rgba(66, 153, 225, 0.8), rgba(66, 153, 225, 0.2));
     border-radius: 16px 16px 0 0;
 }
 
@@ -1031,7 +1036,7 @@ footer::before {
 
 .footer-links a:hover,
 .footer-contact a:hover {
-    color: #e25289;
+    color: #4299e1;
 }
 
 .footer-links a::after,
@@ -1075,7 +1080,7 @@ footer::before {
     border-radius: 16px;
     font-size: 18px;
     font-weight: 600;
-    color: #000000;
+    color: #2563eb;
     user-select: none;
 }
 
