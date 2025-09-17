@@ -1,6 +1,21 @@
 "use strict";
 
-// Navbar toggle and sticky shadow
+// ===== PERFORMANCE OPTIMIZATIONS =====
+const passiveEventOptions = { passive: true };
+const throttle = (func, limit) => {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+};
+
+// ===== NAVBAR FUNCTIONALITY =====
 (function () {
     const navToggle = document.getElementById('navbar-toggle');
     const navLinks = document.getElementById('navbar-links');
@@ -22,15 +37,13 @@
         });
     }
 
-    const onScroll = () => {
+    const onScroll = throttle(() => {
         if (!navbar) return;
-        if (window.scrollY > 8) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    };
-    document.addEventListener('scroll', onScroll, { passive: true });
+        const scrolled = window.scrollY > 8;
+        navbar.classList.toggle('scrolled', scrolled);
+    }, 16); // ~60fps
+    
+    document.addEventListener('scroll', onScroll, passiveEventOptions);
 
     // Active link highlight
     if (navLinks) {
@@ -59,22 +72,32 @@
     }
 })();
 
-// Scroll to top button
+// ===== SCROLL TO TOP BUTTON =====
 (function () {
     const toTop = document.getElementById('toTop');
     if (!toTop) return;
-    const toggleToTop = () => {
-        toTop.style.display = window.scrollY > 300 ? 'grid' : 'none';
-    };
-    document.addEventListener('scroll', toggleToTop, { passive: true });
-    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    
+    const toggleToTop = throttle(() => {
+        const shouldShow = window.scrollY > 300;
+        toTop.style.display = shouldShow ? 'grid' : 'none';
+    }, 100);
+    
+    document.addEventListener('scroll', toggleToTop, passiveEventOptions);
+    
+    toTop.addEventListener('click', () => {
+        window.scrollTo({ 
+            top: 0, 
+            behavior: 'smooth' 
+        });
+    });
 })();
 
-// Contact form submission (Web3Forms)
+// ===== CONTACT FORM SUBMISSION =====
 (function () {
     const contactForm = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
     const statusBox = document.getElementById('form-status');
+    
     if (!contactForm || !submitBtn || !statusBox) return;
 
     contactForm.addEventListener('submit', async (e) => {
@@ -85,10 +108,16 @@
 
         try {
             const formData = new FormData(contactForm);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+            
             const response = await fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                signal: controller.signal
             });
+            
+            clearTimeout(timeoutId);
 
             const result = await response.json();
             if (response.ok && result.success) {
@@ -100,7 +129,10 @@
                 throw new Error(result.message || 'Failed to send message. Please try again later.');
             }
         } catch (err) {
-            statusBox.textContent = `❌ ${err.message}`;
+            const errorMessage = err.name === 'AbortError' ? 
+                'Request timed out. Please try again.' : 
+                `❌ ${err.message}`;
+            statusBox.textContent = errorMessage;
             statusBox.classList.remove('success');
             statusBox.classList.add('error');
         } finally {
@@ -110,8 +142,7 @@
     });
 })();
 
-// Typed text animation
-
+// ===== TYPED TEXT ANIMATION =====
 document.addEventListener("DOMContentLoaded", function () {
     const roles = [
         "Final-year BCA Student",
@@ -124,11 +155,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let i = 0, j = 0, current = "", isDeleting = false;
     let isPaused = false;
+    let animationId;
 
     function type() {
         const textSpan = document.getElementById("typed-text");
-
-        if (!textSpan) return; // prevent crash
+        if (!textSpan) return;
 
         if (i < roles.length) {
             if (!isDeleting) {
@@ -137,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (j > roles[i].length) {
                     isPaused = true;
-                    setTimeout(() => {
+                    animationId = setTimeout(() => {
                         isDeleting = true;
                         isPaused = false;
                         type();
@@ -154,10 +185,76 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
 
-            setTimeout(type, isDeleting ? 50 : 120);
+            animationId = setTimeout(type, isDeleting ? 50 : 120);
         }
     }
 
-    type();
+    // Start animation with intersection observer for performance
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !animationId) {
+                type();
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    const typedTextElement = document.getElementById("typed-text");
+    if (typedTextElement) {
+        observer.observe(typedTextElement.parentElement);
+    }
 });
+
+// ===== ADDITIONAL PERFORMANCE OPTIMIZATIONS =====
+
+// Lazy load images when they come into view
+(function() {
+    const images = document.querySelectorAll('img[loading="lazy"]');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.classList.add('loaded');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+        
+        images.forEach(img => imageObserver.observe(img));
+    }
+})();
+
+// Preload critical resources
+(function() {
+    const preloadLinks = [
+        'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap',
+        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css'
+    ];
+    
+    preloadLinks.forEach(href => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'style';
+        link.href = href;
+        link.onload = function() {
+            this.onload = null;
+            this.rel = 'stylesheet';
+        };
+        document.head.appendChild(link);
+    });
+})();
+
+// Service Worker registration for PWA features
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+            });
+    });
+}
 
