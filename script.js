@@ -603,6 +603,9 @@ aws cloudfront create-distribution \\
         }, 15000);
     }
 
+    // Listen for mobile auto-start event
+    document.getElementById('code-showcase')?.addEventListener('startCodeAnimation', initCodeShowcase);
+    
     document.addEventListener('DOMContentLoaded', initCodeShowcase);
 })();
 
@@ -747,12 +750,199 @@ aws cloudfront create-distribution \\
         });
     }, { threshold: 0.5 });
 
+    // Listen for mobile auto-start event
+    document.getElementById('terminal')?.addEventListener('startTerminalAnimation', initTerminal);
+    
     document.addEventListener('DOMContentLoaded', () => {
         const terminalSection = document.getElementById('terminal');
         if (terminalSection) {
             terminalObserver.observe(terminalSection);
         }
     });
+})();
+
+// ===== MOBILE DETECTION AND OPTIMIZATION =====
+const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+           window.innerWidth <= 768;
+};
+
+const isVerySmallScreen = () => {
+    return window.innerWidth <= 480;
+};
+
+// ===== MOBILE-OPTIMIZED ANIMATIONS =====
+(function() {
+    let userHasInteracted = false;
+    
+    // Track user interaction for vibration API
+    function enableUserInteraction() {
+        userHasInteracted = true;
+        console.log('🎯 User interaction detected - haptic feedback enabled');
+        
+        // Remove listeners after first interaction
+        document.removeEventListener('touchstart', enableUserInteraction);
+        document.removeEventListener('click', enableUserInteraction);
+    }
+    
+    // Add interaction listeners
+    document.addEventListener('touchstart', enableUserInteraction, { once: true });
+    document.addEventListener('click', enableUserInteraction, { once: true });
+    
+    function optimizeForMobile() {
+        if (isMobile()) {
+            // Add mobile class for CSS targeting
+            document.body.classList.add('mobile-device');
+            
+            // Reduce typewriter speed on mobile for better performance
+            const originalTypewriter = window.typeWriter;
+            if (originalTypewriter) {
+                window.typeWriter = function(text, element, speed = 80) {
+                    return originalTypewriter.call(this, text, element, speed);
+                };
+            }
+            
+            // Optimize intersection observers for mobile
+            const originalObserver = window.IntersectionObserver;
+            window.IntersectionObserver = function(callback, options = {}) {
+                const mobileOptions = {
+                    ...options,
+                    rootMargin: '20px',
+                    threshold: isVerySmallScreen() ? 0.1 : 0.2
+                };
+                return new originalObserver(callback, mobileOptions);
+            };
+        }
+    }
+    
+    // Safe vibration function
+    window.safeVibrate = function(duration = 10) {
+        if (userHasInteracted && navigator.vibrate && isMobile()) {
+            try {
+                navigator.vibrate(duration);
+            } catch (e) {
+                console.log('Vibration not supported or blocked');
+            }
+        }
+    };
+    
+    // Auto-start animations when sections come into view (mobile-friendly)
+    function initMobileAnimations() {
+        // Code showcase auto-start
+        const codeSection = document.getElementById('code-showcase');
+        if (codeSection) {
+            const codeObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                        entry.target.classList.add('animated');
+                        // Delay for mobile performance
+                        setTimeout(() => {
+                            const event = new CustomEvent('startCodeAnimation');
+                            codeSection.dispatchEvent(event);
+                        }, isMobile() ? 1000 : 500);
+                        codeObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: isMobile() ? 0.2 : 0.3 });
+            
+            codeObserver.observe(codeSection);
+        }
+        
+        // Terminal auto-start
+        const terminalSection = document.getElementById('terminal');
+        if (terminalSection) {
+            const terminalObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                        entry.target.classList.add('animated');
+                        setTimeout(() => {
+                            const event = new CustomEvent('startTerminalAnimation');
+                            terminalSection.dispatchEvent(event);
+                        }, isMobile() ? 1500 : 1000);
+                        terminalObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: isMobile() ? 0.3 : 0.5 });
+            
+            terminalObserver.observe(terminalSection);
+        }
+        
+        // Skills section animations
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+            const skillsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                        entry.target.classList.add('animated');
+                        // Add mobile-friendly touch effects for cloud services
+                        const cloudServices = entry.target.querySelectorAll('.cloud-service');
+                        cloudServices.forEach((service, index) => {
+                            // Add staggered animation delay for mobile
+                            service.style.animationDelay = `${index * 0.3}s`;
+                            
+                            // Touch events for mobile
+                            service.addEventListener('touchstart', (e) => {
+                                e.preventDefault();
+                                service.style.transform = 'scale(1.08)';
+                                service.style.background = 'rgba(59, 130, 246, 0.2)';
+                                service.style.borderColor = '#3b82f6';
+                                
+                                // Add haptic feedback if available
+                                window.safeVibrate(10);
+                            });
+                            
+                            service.addEventListener('touchend', () => {
+                                setTimeout(() => {
+                                    service.style.transform = 'scale(1)';
+                                    service.style.background = 'rgba(255, 255, 255, 0.05)';
+                                    service.style.borderColor = 'var(--border)';
+                                }, 150);
+                            });
+                            
+                            // Add click event for mobile interaction
+                            service.addEventListener('click', () => {
+                                const serviceName = service.dataset.service;
+                                console.log(`🔵 ${serviceName.toUpperCase()} service activated on mobile!`);
+                            });
+                        });
+                        skillsObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: isMobile() ? 0.1 : 0.2 });
+            
+            skillsObserver.observe(skillsSection);
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        optimizeForMobile();
+        initMobileAnimations();
+    });
+})();
+
+// ===== PERFORMANCE MONITORING =====
+(function() {
+    function monitorPerformance() {
+        if ('performance' in window) {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const perfData = performance.getEntriesByType('navigation')[0];
+                    const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
+                    
+                    if (isMobile()) {
+                        console.log(`📱 Mobile load time: ${loadTime}ms`);
+                        if (loadTime > 4000) {
+                            console.warn('Mobile performance could be improved');
+                        }
+                    } else {
+                        console.log(`💻 Desktop load time: ${loadTime}ms`);
+                    }
+                }, 100);
+            });
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', monitorPerformance);
 })();
 
 // ===== INITIALIZATION =====

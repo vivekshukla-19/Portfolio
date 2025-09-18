@@ -116,6 +116,21 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   padding-bottom: env(safe-area-inset-bottom);
+  
+  /* Mobile optimizations */
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Mobile device specific optimizations */
+body.mobile-device {
+  font-display: swap;
+  
+  /* Optimize background for mobile */
+  background-image:
+    radial-gradient(600px 400px at 20% 80%, rgba(59, 130, 246, 0.08), transparent 60%),
+    radial-gradient(400px 300px at 80% 20%, rgba(139, 92, 246, 0.06), transparent 60%);
 }
 
 .container {
@@ -313,22 +328,46 @@ textarea:focus-visible,
 
 .tech-icon {
   position: absolute;
-  font-size: 2rem;
-  opacity: 0.1;
+  font-size: 2.4rem; /* Default desktop size - bigger than before */
+  opacity: 0.12; /* Slightly more visible */
   animation: floatTech 20s infinite linear;
   color: var(--accent);
 }
 
-.tech-icon:nth-child(1) { left: 10%; animation-delay: 0s; font-size: 1.5rem; }
-.tech-icon:nth-child(2) { left: 20%; animation-delay: -2s; font-size: 2.2rem; }
-.tech-icon:nth-child(3) { left: 30%; animation-delay: -4s; font-size: 1.8rem; }
-.tech-icon:nth-child(4) { left: 40%; animation-delay: -6s; font-size: 2rem; }
-.tech-icon:nth-child(5) { left: 50%; animation-delay: -8s; font-size: 1.6rem; }
-.tech-icon:nth-child(6) { left: 60%; animation-delay: -10s; font-size: 2.1rem; }
-.tech-icon:nth-child(7) { left: 70%; animation-delay: -12s; font-size: 1.9rem; }
-.tech-icon:nth-child(8) { left: 80%; animation-delay: -14s; font-size: 1.7rem; }
-.tech-icon:nth-child(9) { left: 90%; animation-delay: -16s; font-size: 2.3rem; }
-.tech-icon:nth-child(10) { left: 15%; animation-delay: -18s; font-size: 1.4rem; }
+/* Vary animation duration for more natural movement */
+.tech-icon:nth-child(1) { animation-duration: 22s; }
+.tech-icon:nth-child(2) { animation-duration: 18s; }
+.tech-icon:nth-child(3) { animation-duration: 24s; }
+.tech-icon:nth-child(4) { animation-duration: 19s; }
+.tech-icon:nth-child(5) { animation-duration: 21s; }
+.tech-icon:nth-child(6) { animation-duration: 17s; }
+.tech-icon:nth-child(7) { animation-duration: 23s; }
+.tech-icon:nth-child(8) { animation-duration: 20s; }
+.tech-icon:nth-child(9) { animation-duration: 25s; }
+.tech-icon:nth-child(10) { animation-duration: 16s; }
+
+.tech-icon:nth-child(1) { left: 10%; animation-delay: -3s; font-size: 2.4rem; }
+.tech-icon:nth-child(2) { left: 20%; animation-delay: -12s; font-size: 2.4rem; }
+.tech-icon:nth-child(3) { left: 30%; animation-delay: -7s; font-size: 2.4rem; }
+.tech-icon:nth-child(4) { left: 40%; animation-delay: -15s; font-size: 2.4rem; }
+.tech-icon:nth-child(5) { left: 50%; animation-delay: -1s; font-size: 2.4rem; }
+.tech-icon:nth-child(6) { left: 60%; animation-delay: -9s; font-size: 2.4rem; }
+.tech-icon:nth-child(7) { left: 70%; animation-delay: -18s; font-size: 2.4rem; }
+.tech-icon:nth-child(8) { left: 80%; animation-delay: -5s; font-size: 2.4rem; }
+.tech-icon:nth-child(9) { left: 90%; animation-delay: -11s; font-size: 2.4rem; }
+.tech-icon:nth-child(10) { left: 15%; animation-delay: -14s; font-size: 2.4rem; }
+
+/* Mobile positioning for better spread - 8 icons with random delays */
+@media (max-width: 768px) {
+  .tech-icon:nth-child(1) { left: 5% !important; animation-delay: -4s !important; }
+  .tech-icon:nth-child(2) { left: 18% !important; animation-delay: -16s !important; }
+  .tech-icon:nth-child(3) { left: 31% !important; animation-delay: -8s !important; }
+  .tech-icon:nth-child(4) { left: 44% !important; animation-delay: -20s !important; }
+  .tech-icon:nth-child(5) { left: 57% !important; animation-delay: -2s !important; }
+  .tech-icon:nth-child(6) { left: 70% !important; animation-delay: -12s !important; }
+  .tech-icon:nth-child(7) { left: 83% !important; animation-delay: -24s !important; }
+  .tech-icon:nth-child(8) { left: 96% !important; animation-delay: -6s !important; }
+}
 
 @keyframes floatTech {
   0% {
@@ -497,6 +536,24 @@ textarea:focus-visible,
   cursor: pointer;
   position: relative;
   min-height: 44px;
+  
+  /* Mobile touch optimizations */
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+/* Mobile touch feedback */
+@media (max-width: 768px) {
+  .btn:active {
+    transform: scale(0.98) !important;
+    transition: transform 0.1s ease !important;
+  }
+  
+  .btn {
+    min-height: 48px; /* Larger touch target */
+    padding: var(--space-4) var(--space-10);
+  }
 }
 
 .btn-primary {
@@ -1886,6 +1943,218 @@ footer {
   
   .floating-tech-icons {
     display: none; /* Hide on mobile for performance */
+  }
+}
+
+/* ===== MOBILE OPTIMIZED ANIMATIONS ===== */
+@media (max-width: 768px) {
+  /* Simplify floating icons for mobile */
+  .floating-tech-icons {
+    display: block; /* Show on mobile but simplified */
+  }
+  
+  .tech-icon {
+    font-size: 2rem !important; /* Bigger for mobile visibility */
+    opacity: 0.12 !important; /* More visible */
+  }
+  
+  /* Varied durations for mobile - slower but still natural */
+  .tech-icon:nth-child(1) { animation-duration: 28s !important; }
+  .tech-icon:nth-child(2) { animation-duration: 24s !important; }
+  .tech-icon:nth-child(3) { animation-duration: 30s !important; }
+  .tech-icon:nth-child(4) { animation-duration: 26s !important; }
+  .tech-icon:nth-child(5) { animation-duration: 27s !important; }
+  .tech-icon:nth-child(6) { animation-duration: 23s !important; }
+  .tech-icon:nth-child(7) { animation-duration: 29s !important; }
+  .tech-icon:nth-child(8) { animation-duration: 25s !important; }
+  
+  .tech-icon:nth-child(n+9) {
+    display: none; /* Show 8 icons on mobile */
+  }
+  
+  /* Make sure first 8 icons are consistently sized and visible */
+  .tech-icon:nth-child(1) { font-size: 2rem !important; opacity: 0.14 !important; }
+  .tech-icon:nth-child(2) { font-size: 2rem !important; opacity: 0.14 !important; }
+  .tech-icon:nth-child(3) { font-size: 2rem !important; opacity: 0.14 !important; }
+  .tech-icon:nth-child(4) { font-size: 2rem !important; opacity: 0.14 !important; }
+  .tech-icon:nth-child(5) { font-size: 2rem !important; opacity: 0.14 !important; }
+  .tech-icon:nth-child(6) { font-size: 2rem !important; opacity: 0.14 !important; }
+  .tech-icon:nth-child(7) { font-size: 2rem !important; opacity: 0.14 !important; }
+  .tech-icon:nth-child(8) { font-size: 2rem !important; opacity: 0.14 !important; }
+  
+  /* Optimize hero animations */
+  .hero::before {
+    animation-duration: 25s !important;
+    opacity: 0.4;
+  }
+  
+  /* Mobile-friendly cloud services */
+  .cloud-service {
+    animation-duration: 6s !important; /* Slower pulse */
+    min-height: 120px;
+    justify-content: center;
+  }
+  
+  .cloud-service:hover {
+    transform: scale(1.05) !important; /* Smaller scale */
+    transition: transform 0.3s ease !important;
+  }
+  
+  /* Touch feedback for mobile */
+  .cloud-service:active {
+    transform: scale(0.98) !important;
+    background: rgba(59, 130, 246, 0.2) !important;
+    transition: all 0.1s ease !important;
+  }
+  
+  /* Simplify connection lines */
+  .connection-line {
+    animation-duration: 4s !important;
+    opacity: 0.4;
+  }
+  
+  .data-flow {
+    animation-duration: 6s !important;
+  }
+  
+  /* Mobile deployment animations */
+  .pipeline-stage {
+    animation-duration: 12s !important;
+  }
+  
+  .stage-progress::after {
+    animation-duration: 12s !important;
+  }
+  
+  .container-node {
+    animation-duration: 15s !important;
+  }
+  
+  .container-status {
+    animation-duration: 3s !important;
+  }
+  
+  /* Mobile code showcase */
+  .code-showcase {
+    display: block !important; /* Show on mobile */
+  }
+  
+  .code-display-container {
+    margin: 0 var(--space-4);
+  }
+  
+  /* Mobile cloud infrastructure */
+  .cloud-infrastructure {
+    display: block !important;
+    margin: var(--space-12) var(--space-4);
+    padding: var(--space-8);
+  }
+  
+  .cloud-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    min-height: auto;
+  }
+  
+  /* Reset grid positioning for mobile */
+  .cloud-service[data-service="ec2"],
+  .cloud-service[data-service="rds"],
+  .cloud-service[data-service="s3"],
+  .cloud-service[data-service="lambda"],
+  .cloud-service[data-service="api"],
+  .cloud-service[data-service="cloudfront"] {
+    grid-column: unset !important;
+    grid-row: unset !important;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  
+  /* Hide connection lines on mobile */
+  .connection-line {
+    display: none !important;
+  }
+  
+  .data-flow {
+    display: none !important;
+  }
+  
+  /* Mobile docker deployment */
+  .docker-deployment {
+    display: block !important;
+    margin: var(--space-12) var(--space-4);
+    padding: var(--space-8);
+  }
+  
+  .deployment-pipeline {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  
+  .deployment-pipeline::before {
+    display: none;
+  }
+  
+  .container-cluster {
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+}
+
+/* ===== VERY SMALL SCREENS OPTIMIZATION ===== */
+@media (max-width: 480px) {
+  /* Keep 8 icons even on very small screens */
+  .floating-tech-icons .tech-icon:nth-child(n+9) {
+    display: none; /* Show 8 icons on very small screens too */
+  }
+  
+  /* Make icons consistently sized on very small screens */
+  .floating-tech-icons .tech-icon {
+    font-size: 1.8rem !important;
+    opacity: 0.15 !important;
+  }
+  
+  .floating-tech-icons .tech-icon:nth-child(1) { font-size: 1.8rem !important; opacity: 0.15 !important; }
+  .floating-tech-icons .tech-icon:nth-child(2) { font-size: 1.8rem !important; opacity: 0.15 !important; }
+  .floating-tech-icons .tech-icon:nth-child(3) { font-size: 1.8rem !important; opacity: 0.15 !important; }
+  .floating-tech-icons .tech-icon:nth-child(4) { font-size: 1.8rem !important; opacity: 0.15 !important; }
+  .floating-tech-icons .tech-icon:nth-child(5) { font-size: 1.8rem !important; opacity: 0.15 !important; }
+  .floating-tech-icons .tech-icon:nth-child(6) { font-size: 1.8rem !important; opacity: 0.15 !important; }
+  .floating-tech-icons .tech-icon:nth-child(7) { font-size: 1.8rem !important; opacity: 0.15 !important; }
+  .floating-tech-icons .tech-icon:nth-child(8) { font-size: 1.8rem !important; opacity: 0.15 !important; }
+  
+  /* Very small screens - keep flex layout but smaller */
+  .cloud-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: center;
+  }
+  
+  .cloud-service {
+    padding: var(--space-4);
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .cloud-service i {
+    font-size: 1.8rem;
+  }
+  
+  .cloud-infrastructure {
+    padding: var(--space-6);
+    margin: var(--space-8) var(--space-2);
+  }
+  
+  /* Terminal responsive */
+  .terminal-window {
+    margin: 0 var(--space-2);
+  }
+  
+  .terminal-body {
+    padding: var(--space-4);
+    font-size: 0.8rem;
   }
 }
 
