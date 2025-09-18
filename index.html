@@ -228,9 +228,11 @@
         </button>
         <ul class="navbar-links" id="navbar-links">
             <li><a href="#about">About</a></li>
+            <li><a href="#code-showcase">Code</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#skills">Skills</a></li>
-            <li><a href="#contact">Reach Out</a></li>
+            <li><a href="#terminal">Terminal</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
@@ -238,6 +240,19 @@
     <main id="main-content">
     <!-- Hero Section -->
     <header class="hero" role="banner">
+        <!-- Floating Tech Icons -->
+        <div class="floating-tech-icons">
+            <i class="fab fa-python tech-icon"></i>
+            <i class="fab fa-aws tech-icon"></i>
+            <i class="fab fa-docker tech-icon"></i>
+            <i class="fab fa-js-square tech-icon"></i>
+            <i class="fab fa-react tech-icon"></i>
+            <i class="fab fa-html5 tech-icon"></i>
+            <i class="fab fa-css3-alt tech-icon"></i>
+            <i class="fab fa-git-alt tech-icon"></i>
+            <i class="fab fa-node-js tech-icon"></i>
+            <i class="fas fa-database tech-icon"></i>
+        </div>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
@@ -297,6 +312,39 @@
                         <span class="skill-tag">React</span>
                     </div>
                 </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Animated Code Showcase -->
+    <section id="code-showcase" class="code-showcase">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Code in Action</h2>
+                <p class="section-description">Watch live code examples across different technologies I work with.</p>
+            </div>
+            <div class="code-display-container">
+                <div class="code-tabs">
+                    <button class="code-tab active" data-lang="python">Python</button>
+                    <button class="code-tab" data-lang="javascript">JavaScript</button>
+                    <button class="code-tab" data-lang="docker">Docker</button>
+                    <button class="code-tab" data-lang="aws">AWS CLI</button>
+                </div>
+                <div class="code-display">
+                    <div class="code-header">
+                        <div class="code-controls">
+                            <span class="control red"></span>
+                            <span class="control yellow"></span>
+                            <span class="control green"></span>
+                        </div>
+                        <span class="code-filename" id="code-filename">main.py</span>
+                    </div>
+                    <pre class="code-content" id="code-content"><code id="animated-code"></code></pre>
+                    <div class="code-output" id="code-output">
+                        <div class="output-header">Output:</div>
+                        <div class="output-content" id="output-content"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -374,6 +422,95 @@
         <div class="container">
             <h2 class="section-title">Skills & Tech Stack</h2>
             <p class="section-subtitle">Tools and technologies I use or am currently learning.</p>
+            
+            <!-- Cloud Infrastructure Animation -->
+            <div class="cloud-infrastructure">
+                <div class="cloud-title">
+                    <i class="fab fa-aws"></i>
+                    <h3>Cloud Architecture</h3>
+                </div>
+                <div class="cloud-diagram">
+                    <div class="cloud-service" data-service="ec2">
+                        <i class="fas fa-server"></i>
+                        <span>EC2</span>
+                        <div class="connection-line line-to-rds"></div>
+                        <div class="connection-line line-to-s3"></div>
+                    </div>
+                    <div class="cloud-service" data-service="rds">
+                        <i class="fas fa-database"></i>
+                        <span>RDS</span>
+                    </div>
+                    <div class="cloud-service" data-service="s3">
+                        <i class="fas fa-hdd"></i>
+                        <span>S3</span>
+                    </div>
+                    <div class="cloud-service" data-service="lambda">
+                        <i class="fas fa-bolt"></i>
+                        <span>Lambda</span>
+                        <div class="connection-line line-to-api"></div>
+                    </div>
+                    <div class="cloud-service" data-service="api">
+                        <i class="fas fa-plug"></i>
+                        <span>API Gateway</span>
+                    </div>
+                    <div class="cloud-service" data-service="cloudfront">
+                        <i class="fas fa-globe"></i>
+                        <span>CloudFront</span>
+                    </div>
+                    <div class="data-flow" id="data-flow-1"></div>
+                    <div class="data-flow" id="data-flow-2"></div>
+                    <div class="data-flow" id="data-flow-3"></div>
+                </div>
+            </div>
+            
+            <!-- Docker Deployment Animation -->
+            <div class="docker-deployment">
+                <div class="deployment-title">
+                    <i class="fab fa-docker"></i>
+                    <h3>Container Deployment</h3>
+                </div>
+                <div class="deployment-pipeline">
+                    <div class="pipeline-stage" data-stage="build">
+                        <div class="stage-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <span>Build</span>
+                        <div class="stage-progress"></div>
+                    </div>
+                    <div class="pipeline-stage" data-stage="test">
+                        <div class="stage-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <span>Test</span>
+                        <div class="stage-progress"></div>
+                    </div>
+                    <div class="pipeline-stage" data-stage="deploy">
+                        <div class="stage-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <span>Deploy</span>
+                        <div class="stage-progress"></div>
+                    </div>
+                </div>
+                <div class="container-cluster">
+                    <div class="container-node" data-node="1">
+                        <i class="fab fa-docker"></i>
+                        <span>Container 1</span>
+                        <div class="container-status running"></div>
+                    </div>
+                    <div class="container-node" data-node="2">
+                        <i class="fab fa-docker"></i>
+                        <span>Container 2</span>
+                        <div class="container-status running"></div>
+                    </div>
+                    <div class="container-node" data-node="3">
+                        <i class="fab fa-docker"></i>
+                        <span>Container 3</span>
+                        <div class="container-status running"></div>
+                    </div>
+                </div>
+            </div>
+            
         <div class="tech-stack">
             <div class="tech-item">
                 <i class="fa-brands fa-python" aria-hidden="true"></i>
@@ -432,6 +569,34 @@
                 <span>SQL</span>
             </div>
         </div>
+        </div>
+    </section>
+
+    <!-- Interactive Terminal -->
+    <section id="terminal" class="terminal-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Terminal Commands</h2>
+                <p class="section-description">Watch me execute common DevOps and development commands.</p>
+            </div>
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-controls">
+                        <span class="control red"></span>
+                        <span class="control yellow"></span>
+                        <span class="control green"></span>
+                    </div>
+                    <span class="terminal-title">vivek@portfolio:~$</span>
+                </div>
+                <div class="terminal-body" id="terminal-body">
+                    <div class="terminal-line">
+                        <span class="prompt">vivek@portfolio:~$</span>
+                        <span class="command" id="terminal-command"></span>
+                        <span class="terminal-cursor">|</span>
+                    </div>
+                    <div class="terminal-output" id="terminal-output"></div>
+                </div>
+            </div>
         </div>
     </section>
 

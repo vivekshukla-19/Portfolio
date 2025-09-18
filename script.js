@@ -396,6 +396,365 @@ window.addEventListener('unhandledrejection', (e) => {
     console.error('Unhandled promise rejection:', e.reason);
 });
 
+// ===== ANIMATED CODE SHOWCASE =====
+(function() {
+    const codeExamples = {
+        python: {
+            filename: 'cloud_deploy.py',
+            code: `<span class="comment"># AWS Lambda deployment script</span>
+<span class="keyword">import</span> boto3
+<span class="keyword">import</span> json
+
+<span class="keyword">def</span> <span class="function">deploy_to_aws</span>():
+    <span class="variable">lambda_client</span> = boto3.client(<span class="string">'lambda'</span>)
+    
+    <span class="keyword">with</span> open(<span class="string">'function.zip'</span>, <span class="string">'rb'</span>) <span class="keyword">as</span> f:
+        <span class="variable">zip_content</span> = f.read()
+    
+    <span class="variable">response</span> = lambda_client.update_function_code(
+        FunctionName=<span class="string">'my-function'</span>,
+        ZipFile=<span class="variable">zip_content</span>
+    )
+    
+    <span class="keyword">return</span> response[<span class="string">'FunctionArn'</span>]
+
+<span class="comment"># Deploy the function</span>
+<span class="variable">arn</span> = <span class="function">deploy_to_aws</span>()
+<span class="function">print</span>(<span class="string">f"Deployed: {arn}"</span>)`,
+            output: `✅ Function deployed successfully!
+ARN: arn:aws:lambda:us-east-1:123456789012:function:my-function
+Status: Active
+Runtime: python3.9`
+        },
+        javascript: {
+            filename: 'api_handler.js',
+            code: `<span class="comment">// Express.js API with MongoDB</span>
+<span class="keyword">const</span> <span class="variable">express</span> = <span class="function">require</span>(<span class="string">'express'</span>);
+<span class="keyword">const</span> <span class="variable">mongoose</span> = <span class="function">require</span>(<span class="string">'mongoose'</span>);
+
+<span class="keyword">const</span> <span class="variable">app</span> = <span class="function">express</span>();
+
+<span class="comment">// Connect to MongoDB</span>
+mongoose.<span class="function">connect</span>(<span class="string">'mongodb://localhost:27017/portfolio'</span>);
+
+<span class="comment">// API Route</span>
+app.<span class="function">get</span>(<span class="string">'/api/projects'</span>, <span class="keyword">async</span> (req, res) => {
+  <span class="keyword">try</span> {
+    <span class="keyword">const</span> <span class="variable">projects</span> = <span class="keyword">await</span> Project.<span class="function">find</span>();
+    res.<span class="function">json</span>({ 
+      <span class="variable">success</span>: <span class="keyword">true</span>, 
+      <span class="variable">data</span>: projects 
+    });
+  } <span class="keyword">catch</span> (error) {
+    res.<span class="function">status</span>(<span class="number">500</span>).<span class="function">json</span>({ <span class="variable">error</span>: error.message });
+  }
+});
+
+app.<span class="function">listen</span>(<span class="number">3000</span>, () => {
+  console.<span class="function">log</span>(<span class="string">'Server running on port 3000'</span>);
+});`,
+            output: `🚀 Server started successfully!
+Connected to MongoDB
+✅ Database connection established
+🌐 API endpoint active: http://localhost:3000/api/projects
+Server running on port 3000`
+        },
+        docker: {
+            filename: 'Dockerfile',
+            code: `<span class="comment"># Multi-stage Docker build</span>
+<span class="keyword">FROM</span> node:<span class="number">18</span>-alpine <span class="keyword">AS</span> builder
+
+<span class="keyword">WORKDIR</span> /app
+<span class="keyword">COPY</span> package*.json ./
+<span class="keyword">RUN</span> npm ci --only=production
+
+<span class="comment"># Production stage</span>
+<span class="keyword">FROM</span> node:<span class="number">18</span>-alpine
+
+<span class="keyword">RUN</span> addgroup -g <span class="number">1001</span> -S nodejs
+<span class="keyword">RUN</span> adduser -S nextjs -u <span class="number">1001</span>
+
+<span class="keyword">WORKDIR</span> /app
+<span class="keyword">COPY</span> --from=builder /app/node_modules ./node_modules
+<span class="keyword">COPY</span> --chown=nextjs:nodejs . .
+
+<span class="keyword">USER</span> nextjs
+
+<span class="keyword">EXPOSE</span> <span class="number">3000</span>
+
+<span class="keyword">CMD</span> [<span class="string">"npm"</span>, <span class="string">"start"</span>]`,
+            output: `🐳 Building Docker image...
+Step 1/10 : FROM node:18-alpine AS builder
+ ---> a1b2c3d4e5f6
+Step 2/10 : WORKDIR /app
+ ---> Running in 1234567890ab
+Successfully built image: portfolio:latest
+✅ Container ready for deployment!`
+        },
+        aws: {
+            filename: 'deploy.sh',
+            code: `<span class="comment"># AWS CLI deployment script</span>
+<span class="keyword">#!/bin/bash</span>
+
+<span class="comment"># Create S3 bucket for static hosting</span>
+aws s3 mb s3://vivek-portfolio-bucket
+
+<span class="comment"># Enable static website hosting</span>
+aws s3 website s3://vivek-portfolio-bucket \\
+  --index-document index.html \\
+  --error-document error.html
+
+<span class="comment"># Upload files</span>
+aws s3 sync ./dist s3://vivek-portfolio-bucket
+
+<span class="comment"># Create CloudFront distribution</span>
+aws cloudfront create-distribution \\
+  --distribution-config file://cloudfront-config.json
+
+<span class="function">echo</span> <span class="string">"✅ Portfolio deployed to AWS!"</span>`,
+            output: `🚀 Deploying to AWS...
+✅ S3 bucket created: vivek-portfolio-bucket
+✅ Static hosting enabled
+📁 Uploading files... (15 files uploaded)
+☁️  CloudFront distribution created
+🌐 Domain: d1234567890.cloudfront.net
+✅ Portfolio deployed successfully!`
+        }
+    };
+
+    let currentLang = 'python';
+    let typewriterTimeout;
+
+    function typeWriter(text, element, speed = 50) {
+        element.innerHTML = '';
+        let i = 0;
+        
+        function type() {
+            if (i < text.length) {
+                element.innerHTML += text.charAt(i);
+                i++;
+                typewriterTimeout = setTimeout(type, speed);
+            } else {
+                // Add blinking cursor at the end
+                element.innerHTML += '<span class="typing-cursor"></span>';
+            }
+        }
+        
+        type();
+    }
+
+    function switchCodeExample(lang) {
+        if (!codeExamples[lang] || lang === currentLang) return;
+        
+        currentLang = lang;
+        const example = codeExamples[lang];
+        
+        // Clear any existing typewriter
+        if (typewriterTimeout) {
+            clearTimeout(typewriterTimeout);
+        }
+        
+        // Update filename
+        document.getElementById('code-filename').textContent = example.filename;
+        
+        // Update tabs
+        document.querySelectorAll('.code-tab').forEach(tab => {
+            tab.classList.remove('active');
+            if (tab.dataset.lang === lang) {
+                tab.classList.add('active');
+            }
+        });
+        
+        // Clear and start typing animation
+        const codeElement = document.getElementById('animated-code');
+        const outputElement = document.getElementById('output-content');
+        
+        codeElement.innerHTML = '';
+        outputElement.innerHTML = '';
+        
+        // Type the code
+        typeWriter(example.code, codeElement, 30);
+        
+        // Show output after code is done typing
+        setTimeout(() => {
+            typeWriter(example.output, outputElement, 40);
+        }, example.code.length * 30 + 500);
+    }
+
+    function initCodeShowcase() {
+        // Add click handlers to tabs
+        document.querySelectorAll('.code-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchCodeExample(tab.dataset.lang);
+            });
+        });
+
+        // Start with Python example
+        setTimeout(() => {
+            switchCodeExample('python');
+        }, 1000);
+
+        // Auto-rotate through examples every 15 seconds
+        setInterval(() => {
+            const languages = Object.keys(codeExamples);
+            const currentIndex = languages.indexOf(currentLang);
+            const nextIndex = (currentIndex + 1) % languages.length;
+            switchCodeExample(languages[nextIndex]);
+        }, 15000);
+    }
+
+    document.addEventListener('DOMContentLoaded', initCodeShowcase);
+})();
+
+// ===== TERMINAL SIMULATION =====
+(function() {
+    const terminalCommands = [
+        {
+            command: 'git status',
+            output: `<span class="info">On branch main</span>
+<span class="info">Your branch is up to date with 'origin/main'.</span>
+
+<span class="success">nothing to commit, working tree clean</span>`
+        },
+        {
+            command: 'docker ps',
+            output: `<span class="info">CONTAINER ID   IMAGE                    COMMAND                  CREATED         STATUS         PORTS                    NAMES</span>
+<span class="success">a1b2c3d4e5f6   portfolio:latest        "npm start"              2 minutes ago   Up 2 minutes   0.0.0.0:3000->3000/tcp   portfolio-app</span>
+<span class="success">f6e5d4c3b2a1   nginx:alpine            "/docker-entrypoint.…"   5 minutes ago   Up 5 minutes   0.0.0.0:80->80/tcp       nginx-proxy</span>`
+        },
+        {
+            command: 'aws s3 ls s3://my-portfolio-bucket',
+            output: `<span class="info">2025-01-15 10:30:22       2048 index.html</span>
+<span class="info">2025-01-15 10:30:23       5632 style.css</span>
+<span class="info">2025-01-15 10:30:24       3421 script.js</span>
+<span class="info">2025-01-15 10:30:25     102400 vs-img.png</span>
+<span class="success">✅ Portfolio files synced successfully!</span>`
+        },
+        {
+            command: 'kubectl get pods',
+            output: `<span class="info">NAME                                READY   STATUS    RESTARTS   AGE</span>
+<span class="success">portfolio-deployment-7d4b8c9f-x2k5m   1/1     Running   0          5m</span>
+<span class="success">portfolio-deployment-7d4b8c9f-y3l6n   1/1     Running   0          5m</span>
+<span class="success">portfolio-deployment-7d4b8c9f-z4m7o   1/1     Running   0          5m</span>`
+        },
+        {
+            command: 'python manage.py runserver',
+            output: `<span class="info">Watching for file changes with StatReloader</span>
+<span class="info">Performing system checks...</span>
+
+<span class="success">System check identified no issues (0 silenced).</span>
+<span class="info">January 15, 2025 - 10:30:00</span>
+<span class="success">Django version 4.2.0, using settings 'myproject.settings'</span>
+<span class="success">Starting development server at http://127.0.0.1:8000/</span>
+<span class="info">Quit the server with CONTROL-C.</span>`
+        },
+        {
+            command: 'npm run build',
+            output: `<span class="info">> portfolio@1.0.0 build</span>
+<span class="info">> react-scripts build</span>
+
+<span class="info">Creating an optimized production build...</span>
+<span class="success">Compiled successfully.</span>
+
+<span class="info">File sizes after gzip:</span>
+<span class="info">  45.2 kB  build/static/js/main.8f4b2c1d.js</span>
+<span class="info">  2.1 kB   build/static/css/main.f9c3d2e1.css</span>
+
+<span class="success">✅ Build completed successfully!</span>`
+        }
+    ];
+
+    let currentCommandIndex = 0;
+    let isTyping = false;
+
+    function typeCommand(command, callback) {
+        if (isTyping) return;
+        
+        isTyping = true;
+        const commandElement = document.getElementById('terminal-command');
+        const cursor = document.querySelector('.terminal-cursor');
+        
+        commandElement.textContent = '';
+        cursor.style.display = 'inline';
+        
+        let i = 0;
+        const typeInterval = setInterval(() => {
+            if (i < command.length) {
+                commandElement.textContent += command.charAt(i);
+                i++;
+            } else {
+                clearInterval(typeInterval);
+                cursor.style.display = 'none';
+                setTimeout(() => {
+                    callback();
+                }, 500);
+            }
+        }, 80);
+    }
+
+    function showOutput(output) {
+        const outputElement = document.getElementById('terminal-output');
+        outputElement.innerHTML = output;
+        
+        // After showing output, prepare for next command
+        setTimeout(() => {
+            prepareNextCommand();
+        }, 3000);
+    }
+
+    function prepareNextCommand() {
+        const terminalBody = document.getElementById('terminal-body');
+        const commandElement = document.getElementById('terminal-command');
+        const cursor = document.querySelector('.terminal-cursor');
+        
+        // Clear previous command and output
+        commandElement.textContent = '';
+        document.getElementById('terminal-output').innerHTML = '';
+        cursor.style.display = 'inline';
+        
+        // Move to next command
+        currentCommandIndex = (currentCommandIndex + 1) % terminalCommands.length;
+        isTyping = false;
+        
+        // Start next command after a pause
+        setTimeout(() => {
+            executeCommand();
+        }, 1000);
+    }
+
+    function executeCommand() {
+        const currentCommand = terminalCommands[currentCommandIndex];
+        
+        typeCommand(currentCommand.command, () => {
+            showOutput(currentCommand.output);
+        });
+    }
+
+    function initTerminal() {
+        // Start the terminal simulation
+        setTimeout(() => {
+            executeCommand();
+        }, 2000);
+    }
+
+    // Initialize when the terminal section is visible
+    const terminalObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                initTerminal();
+                terminalObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const terminalSection = document.getElementById('terminal');
+        if (terminalSection) {
+            terminalObserver.observe(terminalSection);
+        }
+    });
+})();
+
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
     // Add loaded class to body for CSS transitions
