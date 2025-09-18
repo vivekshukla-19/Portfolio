@@ -261,16 +261,15 @@
                 <div class="hero-visual">
                     <div class="portrait-container">
                         <div class="portrait-wrap">
-                            <picture>
-                                <source srcset="vs-img.webp" type="image/webp">
-                                <img src="vs-img.png" 
-                                     alt="Vivek Shukla - Cloud & DevOps Enthusiast and BCA Student" 
-                                     loading="eager" 
-                                     width="300" 
-                                     height="300"
-                                     decoding="async"
-                                     fetchpriority="high" />
-                            </picture>
+                            <img src="vs-img.png" 
+                                 alt="Vivek Shukla - Cloud & DevOps Enthusiast and BCA Student" 
+                                 loading="eager" 
+                                 width="300" 
+                                 height="300"
+                                 decoding="async"
+                                 fetchpriority="high" 
+                                 onload="this.style.opacity='1'"
+                                 style="opacity:0;transition:opacity 0.3s ease" />
                         </div>
                     </div>
                 </div>
