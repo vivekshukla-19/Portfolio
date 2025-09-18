@@ -1,0 +1,89 @@
+{
+  "name": "vivek-shukla-portfolio",
+  "version": "2.0.0",
+  "description": "Production-grade portfolio website for Vivek Shukla - Cloud & DevOps Enthusiast",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000 --host=localhost --open=/",
+    "build": "npm run lint && npm run optimize-css && npm run optimize-js && npm run optimize-images",
+    "lint": "npm run lint:js && npm run lint:css && npm run lint:html",
+    "lint:js": "eslint script.js --fix",
+    "lint:css": "stylelint style.css --fix",
+    "lint:html": "htmlhint index.html",
+    "format": "prettier --write \"**/*.{html,css,js,json,md}\"",
+    "optimize-css": "cleancss -o style.min.css style.css",
+    "optimize-js": "terser script.js -o script.min.js --compress --mangle",
+    "optimize-images": "imagemin vs-img.png --out-dir=optimized --plugin=imagemin-webp",
+    "analyze": "npm run analyze:bundle && npm run analyze:lighthouse",
+    "analyze:bundle": "bundlesize",
+    "analyze:lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html",
+    "test": "npm run lint && npm run analyze:bundle",
+    "serve": "http-server -p 3000 -c-1",
+    "type-check": "echo 'No TypeScript files to check'",
+    "audit-security": "npm audit --audit-level=moderate",
+    "precommit": "npm run lint && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vivekshukla-19/Portfolio.git"
+  },
+  "keywords": [
+    "portfolio",
+    "cloud-computing",
+    "devops",
+    "web-development",
+    "python",
+    "aws",
+    "docker",
+    "javascript",
+    "html",
+    "css"
+  ],
+  "author": {
+    "name": "Vivek Shukla",
+    "email": "shvivek19@gmail.com",
+    "url": "https://vivekshukla.dev"
+  },
+  "license": "MIT",
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "not dead",
+    "not op_mini all",
+    "not ie 11"
+  ],
+  "devDependencies": {
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-html": "^7.1.0",
+    "prettier": "^3.0.3",
+    "stylelint": "^15.10.3",
+    "stylelint-config-standard": "^34.0.0",
+    "stylelint-config-prettier": "^10.0.0",
+    "htmlhint": "^1.1.4",
+    "clean-css-cli": "^5.6.2",
+    "terser": "^5.20.0",
+    "imagemin": "^8.0.1",
+    "imagemin-webp": "^8.0.0",
+    "bundlesize": "^0.18.1",
+    "lighthouse": "^11.0.0",
+    "live-server": "^1.2.2",
+    "http-server": "^14.1.1"
+  },
+  "bundlesize": [
+    {
+      "path": "./style.css",
+      "maxSize": "50kb",
+      "compression": "gzip"
+    },
+    {
+      "path": "./script.js",
+      "maxSize": "20kb",
+      "compression": "gzip"
+    }
+  ],
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

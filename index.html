@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description"
-        content="Vivek Shukla - Cloud & DevOps Enthusiast. Final-year BCA student showcasing projects in Cloud Computing, DevOps, Python, and Web Development. Preparing for MCA with expertise in AWS, Docker, and modern web technologies." />
+        content="Vivek Shukla - Cloud & DevOps Engineer specializing in AWS, Docker, Python. BCA graduate building scalable applications with modern DevOps practices. Explore my portfolio." />
     <meta name="keywords" content="Vivek Shukla, Portfolio, Cloud Computing, DevOps, Python, Web Development, BCA Student, AWS, Docker, React, JavaScript, HTML, CSS, Git, CI/CD, Kubernetes" />
     <meta name="author" content="Vivek Shukla" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
@@ -19,9 +19,9 @@
     <link rel="canonical" href="https://vivekshukla.dev/" />
     
     <!-- Title with improved SEO -->
-    <title>Vivek Shukla - Cloud & DevOps Portfolio | BCA Student | Python Developer</title>
+    <title>Vivek Shukla Portfolio</title>
     <!-- Open Graph / Facebook -->
-    <meta property="og:title" content="Vivek Shukla - Cloud & DevOps Portfolio | BCA Student | Python Developer" />
+    <meta property="og:title" content="Vivek Shukla Portfolio" />
     <meta property="og:description"
         content="Final-year BCA student passionate about Cloud Computing, DevOps, and Web Development. Showcasing projects in Python, AWS, Docker, and modern web technologies. Preparing for MCA with hands-on experience in scalable applications." />
     <meta property="og:type" content="website" />
@@ -35,7 +35,7 @@
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Vivek Shukla - Cloud & DevOps Portfolio | BCA Student | Python Developer" />
+    <meta name="twitter:title" content="Vivek Shukla Portfolio" />
     <meta name="twitter:description"
         content="Final-year BCA student passionate about Cloud Computing, DevOps, and Web Development. Showcasing projects in Python, AWS, Docker, and modern web technologies." />
     <meta name="twitter:image" content="https://vivekshukla.dev/vs-img.png" />
@@ -62,12 +62,15 @@
     <meta name="format-detection" content="telephone=no" />
     
     <!-- Favicon and Icons -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" href="/vs-img.png" />
+    <link rel="apple-touch-icon" href="/vs-img.png" />
+    
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileImage" content="/vs-img.png" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/site.webmanifest" />
     
     <!-- Preconnect to external domains for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -139,6 +142,46 @@
     }
     </script>
     
+    <!-- Breadcrumb Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://vivekshukla.dev/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "About",
+                "item": "https://vivekshukla.dev/#about"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Projects",
+                "item": "https://vivekshukla.dev/#projects"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Skills",
+                "item": "https://vivekshukla.dev/#skills"
+            },
+            {
+                "@type": "ListItem",
+                "position": 5,
+                "name": "Contact",
+                "item": "https://vivekshukla.dev/#contact"
+            }
+        ]
+    }
+    </script>
+    
     <!-- Website Schema -->
     <script type="application/ld+json">
     {
@@ -186,216 +229,333 @@
     <main id="main-content">
     <!-- Hero Section -->
     <header class="hero" role="banner">
-        <div class="hero-main">
-            <span class="hero-path">&gt; Cloud &bull; DevOps &bull; Web Dev &bull; Python</span>
-            <h1 class="hero-title">Hi, I'm Vivek Shukla <br /> Cloud & DevOps Enthusiast</h1>
-            <p class="hero-subtitle"><span id="typed-text"></span><span class="cursor"></span></p>
-            <div class="hero-actions">
-                <a href="#projects" class="button" role="button" aria-label="Navigate to projects section">View Projects</a>
-                <a href="#contact" class="button" role="button" aria-label="Navigate to contact section">Contact Me</a>
-            </div>
-        </div>
-        <div class="hero-visual" aria-hidden="true">
-            <div class="portrait-wrap">
-                <img src="vs-img.png" 
-                     alt="Vivek Shukla - Cloud & DevOps Enthusiast and BCA Student" 
-                     loading="eager" 
-                     width="340" 
-                     height="340"
-                     decoding="async"
-                     fetchpriority="high" />
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <span class="hero-path">&gt; Cloud • DevOps • Web Dev • Python</span>
+                    <h1 class="hero-title">Hi, I'm Vivek Shukla<br>Cloud & DevOps Enthusiast</h1>
+                    <p class="hero-subtitle"><span id="typed-text"></span><span class="cursor"></span></p>
+                    <div class="hero-actions">
+                        <a href="#projects" class="btn btn-primary" aria-label="View my projects">View Projects</a>
+                        <a href="#contact" class="btn btn-secondary" aria-label="Get in touch">Contact Me</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="portrait-container">
+                        <div class="portrait-wrap">
+                            <img src="vs-img.png" 
+                                 alt="Vivek Shukla - Cloud & DevOps Enthusiast and BCA Student" 
+                                 loading="eager" 
+                                 width="400" 
+                                 height="400"
+                                 decoding="async"
+                                 fetchpriority="high" />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
     <!-- About Me Section -->
     <section id="about" class="about">
-        <h2 id="about-heading">About Me</h2>
-        <p class="about-desc">
-            Final-year BCA student focused on Cloud Computing, DevOps, and modern web development.
-        </p>
-        <div class="about-content">
-            <article class="about-bio card">
-                <span class="card-title">Bio</span>
-                <p class="intro-list">
-                    I'm a final-year BCA student passionate about building scalable cloud-native applications.
-                    Preparing for MCA and actively learning AWS, Docker, and CI/CD while strengthening my Python
-                    and frontend foundations.
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-description">
+                    Final-year BCA student passionate about Cloud Computing, DevOps, and modern web development.
                 </p>
-            </article>
-            <aside class="about-skills card">
-                <span class="card-title">Skills</span>
-                <div class="skills-list" role="list">
-                    <span role="listitem">Python</span><span role="listitem">HTML</span><span
-                        role="listitem">CSS</span><span role="listitem">JavaScript</span><span
-                        role="listitem">Docker(intro)</span>
-                    <span role="listitem">Git</span><span role="listitem">AWS (basic)</span><span role="listitem">React
-                        (learning)</span>
-                </div>
-            </aside>
+            </div>
+            <div class="about-content">
+                <article class="about-card">
+                    <h3 class="card-title">Bio</h3>
+                    <p class="intro-text">
+                        I'm a final-year BCA student passionate about building scalable cloud-native applications.
+                        Preparing for MCA and actively learning AWS, Docker, and CI/CD while strengthening my Python
+                        and frontend foundations. I love solving complex problems and creating efficient solutions.
+                    </p>
+                </article>
+                <article class="about-card">
+                    <h3 class="card-title">Skills</h3>
+                    <div class="skills-grid">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">React</span>
+                    </div>
+                </article>
+            </div>
         </div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects" class="projects">
-        <h2 id="projects-heading">Projects</h2>
-        <p class="projects-desc">Selected work across cloud, DevOps, Python, and web development.</p>
-        <div class="projects-grid">
-            <article class="project-card card">
-                <span class="card-title">Sentence Analyzer</span>
-                <p>
-                    This Python script takes an input sentence and counts the number of vowels, consonants,
-                    digits, spaces, and special characters in it.
-                </p>
-                <div class="project-actions">
-                    <a href="https://github.com/vivekshukla-19/Sentence_Analyzer" target="_blank"
-                        rel="noopener noreferrer" aria-label="View Sentence Analyzer source code on GitHub">
-                        <i class="fas fa-code" aria-hidden="true"></i>
-                        Source Code
-                    </a>
-                </div>
-            </article>
-            <article class="project-card card">
-                <span class="card-title">Rock Paper Scissor Game</span>
-                <p>
-                    It is a game (rock, paper, scissor) using Python. The user is prompted to input their choice,
-                    and the computer randomly selects one from the options.
-                </p>
-                <div class="project-actions">
-                    <a href="https://github.com/vivekshukla-19/Rock_Paper_Scissor" target="_blank"
-                        rel="noopener noreferrer" aria-label="View Rock Paper Scissor Game source code on GitHub">
-                        <i class="fas fa-gamepad" aria-hidden="true"></i>
-                        Source Code
-                    </a>
-                </div>
-            </article>
-            <article class="project-card card">
-                <span class="card-title">Multiple Student Result</span>
-                <p>
-                    This is making a result of multiple students taking marks(input from user) using Python.
-                </p>
-                <div class="project-actions">
-                    <a href="https://github.com/vivekshukla-19/Student_Result" target="_blank"
-                        rel="noopener noreferrer" aria-label="View Student Result Management source code on GitHub">
-                        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                        Source Code
-                    </a>
-                </div>
-            </article>
-            <article class="project-card card">
-                <span class="card-title">My Portfolio</span>
-                <p>
-                    This is my personal portfolio website built using HTML, CSS, and JavaScript.
-                    It contains information about me, my skills, and the projects
-                </p>
-                <div class="project-actions">
-                    <a href="https://github.com/vivekshukla-19/Portfolio" target="_blank"
-                        rel="noopener noreferrer" aria-label="View Portfolio website source code on GitHub">
-                        <i class="fas fa-globe" aria-hidden="true"></i>
-                        Source Code
-                    </a>
-                </div>
-            </article>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Projects</h2>
+                <p class="section-description">Selected work across cloud, DevOps, Python, and web development.</p>
+            </div>
+            <div class="projects-grid">
+                <article class="project-card">
+                    <h3 class="card-title">Sentence Analyzer</h3>
+                    <p class="project-description">
+                        A Python script that analyzes input sentences and counts vowels, consonants,
+                        digits, spaces, and special characters with detailed statistics.
+                    </p>
+                    <div class="project-actions">
+                        <a href="https://github.com/vivekshukla-19/Sentence_Analyzer" target="_blank"
+                            rel="noopener noreferrer" class="project-link">
+                            <i class="fas fa-code" aria-hidden="true"></i>
+                            View Code
+                        </a>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <h3 class="card-title">Rock Paper Scissors</h3>
+                    <p class="project-description">
+                        An interactive Python game where users can play against the computer.
+                        Features random selection and score tracking with a clean interface.
+                    </p>
+                    <div class="project-actions">
+                        <a href="https://github.com/vivekshukla-19/Rock_Paper_Scissor" target="_blank"
+                            rel="noopener noreferrer" class="project-link">
+                            <i class="fas fa-gamepad" aria-hidden="true"></i>
+                            View Code
+                        </a>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <h3 class="card-title">Student Result Manager</h3>
+                    <p class="project-description">
+                        A Python application for managing multiple student results with mark input,
+                        calculation, and result generation features.
+                    </p>
+                    <div class="project-actions">
+                        <a href="https://github.com/vivekshukla-19/Student_Result" target="_blank"
+                            rel="noopener noreferrer" class="project-link">
+                            <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+                            View Code
+                        </a>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <h3 class="card-title">Portfolio Website</h3>
+                    <p class="project-description">
+                        A modern, responsive portfolio website built with HTML, CSS, and JavaScript.
+                        Features smooth animations, contact forms, and mobile-first design.
+                    </p>
+                    <div class="project-actions">
+                        <a href="https://github.com/vivekshukla-19/Portfolio" target="_blank"
+                            rel="noopener noreferrer" class="project-link">
+                            <i class="fas fa-globe" aria-hidden="true"></i>
+                            View Code
+                        </a>
+                    </div>
+                </article>
+            </div>
         </div>
     </section>
 
     <!-- Skills & Tech Stack -->
     <section id="skills" class="skills-tech">
-        <h2 id="skills-heading">Skills & Tech Stack</h2>
-        <p>Tools and technologies I use or am currently learning.</p>
-        <div class="tech-stack" role="list">
-            <button type="button" role="listitem"><i class="fa-brands fa-python" aria-hidden="true"></i>
-                Python</button><button type="button" role="listitem"><i class="fa-brands fa-html5"
-                    aria-hidden="true"></i> HTML</button><button type="button" role="listitem"><i
-                    class="fa-brands fa-css3-alt" aria-hidden="true"></i> CSS</button><button type="button"
-                role="listitem"><i class="fa-brands fa-js" aria-hidden="true"></i> JavaScript</button><button
-                type="button" role="listitem"><i class="fa-brands fa-react" aria-hidden="true"></i>
-                React</button><button type="button" role="listitem"><i class="fa-brands fa-node-js"
-                    aria-hidden="true"></i> Node JS</button><button type="button" role="listitem"><i
-                    class="fa-solid fa-code" aria-hidden="true"></i> VS Code</button><button type="button"
-                role="listitem"><i class="fa-brands fa-git-alt" aria-hidden="true"></i> Git/GitHub</button><button
-                type="button" role="listitem"><i class="fa-solid fa-terminal" aria-hidden="true"></i>
-                Bash</button><button type="button" role="listitem"><i class="fa-solid fa-gears" aria-hidden="true"></i>
-                CI/CD</button><button type="button" role="listitem"><i class="fa-solid fa-cubes" aria-hidden="true"></i>
-                Kubernetes (intro)</button><button type="button" role="listitem"><i class="fa-brands fa-docker"
-                    aria-hidden="true"></i> Docker (intro)</button><button type="button" role="listitem"><i
-                    class="fa-brands fa-aws" aria-hidden="true"></i> AWS (basic)</button><button type="button"
-                role="listitem"><i class="fa-brands fa-sql" aria-hidden="true"></i> SQL</button>
+        <div class="container">
+            <h2 class="section-title">Skills & Tech Stack</h2>
+            <p class="section-subtitle">Tools and technologies I use or am currently learning.</p>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <i class="fa-brands fa-python" aria-hidden="true"></i>
+                <span>Python</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-brands fa-html5" aria-hidden="true"></i>
+                <span>HTML</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-brands fa-css3-alt" aria-hidden="true"></i>
+                <span>CSS</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-brands fa-js" aria-hidden="true"></i>
+                <span>JavaScript</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-brands fa-react" aria-hidden="true"></i>
+                <span>React</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-brands fa-node-js" aria-hidden="true"></i>
+                <span>Node JS</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-solid fa-code" aria-hidden="true"></i>
+                <span>VS Code</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-brands fa-git-alt" aria-hidden="true"></i>
+                <span>Git/GitHub</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-solid fa-terminal" aria-hidden="true"></i>
+                <span>Bash</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-solid fa-gears" aria-hidden="true"></i>
+                <span>CI/CD</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-solid fa-cubes" aria-hidden="true"></i>
+                <span>Kubernetes</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-brands fa-docker" aria-hidden="true"></i>
+                <span>Docker</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-brands fa-aws" aria-hidden="true"></i>
+                <span>AWS</span>
+            </div>
+            <div class="tech-item">
+                <i class="fa-solid fa-database" aria-hidden="true"></i>
+                <span>SQL</span>
+            </div>
+        </div>
         </div>
     </section>
 
     <!-- Contact Me Section -->
     <section id="contact" class="contact">
-        <h2 id="contact-heading">Contact Me</h2>
-        <p>Feel free to reach out for collaborations or opportunities.</p>
-        <br>
-        <div class="contact-grid">
-            <form class="contact-form" id="contact-form">
-                <label for="name" class="visually-hidden">Your Name</label>
-                <input id="name" type="text" name="name" placeholder="Your Name" aria-required="true" required
-                    autocomplete="name" />
-                <label for="email" class="visually-hidden">Email Address</label>
-                <input id="email" type="email" name="email" placeholder="Email Address" aria-required="true" required
-                    autocomplete="email" inputmode="email" />
-                <label for="message" class="visually-hidden">Write your message</label>
-                <textarea id="message" name="message" placeholder="Write your message..." rows="5" aria-required="true"
-                    minlength="10" required></textarea>
-                <!-- Web3Forms required hidden fields -->
-                <input type="hidden" name="access_key" value="a1ea9203-d073-4ba9-a65d-b1c94c0b5f4d" />
-                <input type="hidden" name="subject" value="New message from portfolio contact form" />
-                <input type="hidden" name="from_name" value="Portfolio Website" />
-                <button type="submit" id="submit-btn" aria-label="Send message">Send Message</button>
-                <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
-            </form>
-            <aside class="contact-info card">
-                <span class="contact-city">Delhi, India</span>
-                <span class="contact-mail">shvivek19@gmail.com</span>
-                <div class="contact-links">
-                    <a href="https://www.linkedin.com/in/vivek-shukla-046822325" target="_blank"
-                        rel="noopener noreferrer"><i class="fa-brands fa-linkedin" aria-hidden="true"></i>
-                        Linkedin</a>
-                    <a href="https://github.com/vivekshukla-19" target="_blank" rel="noopener noreferrer"><i
-                            class="fa-brands fa-github" aria-hidden="true"></i> GitHub</a>
-                    <a href="mailto:shvivek19@gmail.com"><i class="fa-regular fa-envelope" aria-hidden="true"></i>
-                        Email</a>
-                </div>
-            </aside>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Contact Me</h2>
+                <p class="section-description">Feel free to reach out for collaborations or opportunities.</p>
+            </div>
+            <div class="contact-grid">
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <label for="name" class="visually-hidden">Your Name</label>
+                        <input id="name" type="text" name="name" placeholder="Your Name" class="form-input" 
+                               aria-required="true" required autocomplete="name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="visually-hidden">Email Address</label>
+                        <input id="email" type="email" name="email" placeholder="Email Address" class="form-input"
+                               aria-required="true" required autocomplete="email" inputmode="email" />
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="visually-hidden">Write your message</label>
+                        <textarea id="message" name="message" placeholder="Write your message..." 
+                                  class="form-textarea" aria-required="true" minlength="10" required></textarea>
+                    </div>
+                    <!-- Web3Forms required hidden fields -->
+                    <input type="hidden" name="access_key" value="a1ea9203-d073-4ba9-a65d-b1c94c0b5f4d" />
+                    <input type="hidden" name="subject" value="New message from portfolio contact form" />
+                    <input type="hidden" name="from_name" value="Portfolio Website" />
+                    <button type="submit" class="submit-btn" aria-label="Send message">
+                        Send Message
+                    </button>
+                    <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+                </form>
+                <aside class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Delhi, India</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>shvivek19@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-links">
+                        <a href="https://www.linkedin.com/in/vivek-shukla-046822325" target="_blank"
+                           rel="noopener noreferrer" class="social-link" aria-label="Connect on LinkedIn">
+                            <i class="fa-brands fa-linkedin" aria-hidden="true"></i>
+                            <span>LinkedIn</span>
+                         </a>
+                        <a href="https://github.com/vivekshukla-19" target="_blank" rel="noopener noreferrer"
+                           class="social-link" aria-label="View GitHub Profile">
+                            <i class="fa-brands fa-github" aria-hidden="true"></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="mailto:shvivek19@gmail.com" class="social-link" aria-label="Send Email">
+                            <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+                            <span>Email</span>
+                        </a>
+                    </div>
+                </aside>
+            </div>
         </div>
     </section>
     </main>
 
     <!-- Footer -->
     <footer role="contentinfo">
-        <div class="footer-main">
-            <div>
-                <strong>Vivek Shukla</strong><br />
-                <span class="footer-desc">A final-year BCA student's space to showcase projects across Cloud, DevOps,
-                    Python, and Web.</span>
-                <div class="tags">
-                    <span><i class="fa-brands fa-python" aria-hidden="true"></i></span>
-                    <span><i class="fa-brands fa-docker" aria-hidden="true"></i></span>
-                    <span><i class="fa-brands fa-aws" aria-hidden="true"></i></span>
-                    <span><i class="fa-brands fa-square-github" aria-hidden="true"></i></span>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Vivek Shukla</h3>
+                    <p class="footer-desc">
+                        A final-year BCA student passionate about Cloud Computing, DevOps, and modern web development. 
+                        Building scalable solutions and exploring new technologies.
+                    </p>
                 </div>
+                <nav class="footer-links" aria-label="Footer navigation links">
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#contact">Contact</a>
+                </nav>
             </div>
-            <nav class="footer-links" aria-label="Footer navigation links">
-                <a href="#about">About</a>
-                <a href="#projects">Projects</a>
-                <a href="#skills">Skills</a>
-                <a href="#contact">Contact</a>
-            </nav>
-        </div>
-        <br>
-        <div class="footer-copy">
-            © 2025 VIVEK SHUKLA, All rights reserved.
+            <div class="footer-bottom">
+                <p>&copy; 2025 Vivek Shukla. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
     <!-- Scroll to top button -->
-    <button id="toTop" aria-label="Scroll to top">↑</button>
+    <button id="scrollTop" class="scroll-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+    </button>
 
     <!-- Main JS -->
     <script src="script.js" defer></script>
+    <script>
+        // Mobile navbar toggle
+        const navToggle = document.querySelector('.navbar-toggle');
+        const navLinks = document.querySelector('.navbar-links');
+      
+        if (navToggle && navLinks) {
+          navToggle.addEventListener('click', () => {
+            const isActive = navLinks.classList.toggle('active');
+            navToggle.classList.toggle('active', isActive);
+            navToggle.setAttribute('aria-expanded', String(isActive));
+          });
+        }
+      
+        // Navbar scrolled state + Scroll-to-top visibility
+        const navbar = document.querySelector('.navbar');
+        const scrollTopBtn = document.querySelector('.scroll-top');
+        const onScroll = () => {
+          const y = window.scrollY || document.documentElement.scrollTop;
+          if (navbar) navbar.classList.toggle('scrolled', y > 10);
+          if (scrollTopBtn) scrollTopBtn.classList.toggle('visible', y > 300);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      
+        // Scroll to top
+        if (scrollTopBtn) {
+          scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        }
+      </script>
 
 </body>
 
