@@ -13,7 +13,7 @@
     "format": "prettier --write \"**/*.{html,css,js,json,md}\"",
     "optimize-css": "cleancss -o style.min.css style.css",
     "optimize-js": "terser script.js -o script.min.js --compress --mangle",
-    "optimize-images": "imagemin vs-img.png --out-dir=optimized --plugin=imagemin-webp",
+    "optimize-images": "node optimize-images.js",
     "analyze": "npm run analyze:bundle && npm run analyze:lighthouse",
     "analyze:bundle": "bundlesize",
     "analyze:lighthouse": "lighthouse http://localhost:3000 --output=html --output-path=./lighthouse-report.html",

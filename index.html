@@ -78,25 +78,20 @@
     <!-- Web App Manifest -->
     <link rel="manifest" href="site.webmanifest" />
     
-    <!-- Preconnect to external domains for performance -->
+    <!-- Preconnect to most critical domains only (max 4) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://api.web3forms.com" crossorigin>
     
-    <!-- DNS prefetch for additional performance -->
-    <link rel="dns-prefetch" href="//fonts.googleapis.com">
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <!-- DNS prefetch for less critical domains -->
     <link rel="dns-prefetch" href="//api.web3forms.com">
     
     <!-- Critical CSS loaded immediately -->
     <link rel="stylesheet" href="style.css">
     
-    <!-- Google Fonts optimized for speed -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Google Fonts with optimized display and reduced weights -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
     
     <!-- Font Awesome CDN - Preloaded for speed -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -266,13 +261,16 @@
                 <div class="hero-visual">
                     <div class="portrait-container">
                         <div class="portrait-wrap">
-                            <img src="vs-img.png" 
-                                 alt="Vivek Shukla - Cloud & DevOps Enthusiast and BCA Student" 
-                                 loading="eager" 
-                                 width="300" 
-                                 height="300"
-                                 decoding="async"
-                                 fetchpriority="high" />
+                            <picture>
+                                <source srcset="vs-img.webp" type="image/webp">
+                                <img src="vs-img.png" 
+                                     alt="Vivek Shukla - Cloud & DevOps Enthusiast and BCA Student" 
+                                     loading="eager" 
+                                     width="300" 
+                                     height="300"
+                                     decoding="async"
+                                     fetchpriority="high" />
+                            </picture>
                         </div>
                     </div>
                 </div>
