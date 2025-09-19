@@ -2,6 +2,7 @@
 
 /* ===== TOKENS ===== */
 :root {
+  /* Light mode colors */
   --white: #ffffff;
   --black: #1a1a1a;
   --gray-50: #f8fafc;
@@ -15,7 +16,7 @@
   --gray-800: #1e293b;
   --gray-900: #0f172a;
 
-  /* Semantic */
+  /* Dark mode semantic colors (default) */
   --bg: var(--gray-900);
   --bg-elev: #0b1424;
   --surface: rgba(255, 255, 255, 0.04);
@@ -97,6 +98,13 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--header-height);
+  /* Improve text rendering */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Better browser compatibility */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 
 body {
@@ -120,6 +128,18 @@ body {
   -webkit-overflow-scrolling: touch;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  
+  /* Performance optimizations */
+  will-change: auto;
+  contain: layout style paint;
+  
+  /* Better browser compatibility */
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  
+  /* Improved focus management */
+  scroll-behavior: smooth;
 }
 
 /* Mobile device specific optimizations */
@@ -177,6 +197,48 @@ body.mobile-device {
 
 .skip-link:focus {
   top: var(--space-4);
+}
+
+/* Loading indicator */
+.loading-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.loading-indicator.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(59, 130, 246, 0.3);
+  border-top: 3px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--space-4);
+}
+
+.loading-text {
+  color: var(--fg);
+  font-size: 0.9rem;
+  font-weight: var(--font-weight-medium);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Focus States (WCAG 2.1 AA Compliant) */
@@ -2606,10 +2668,46 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Better image loading */
+/* Better image loading and optimization */
 img {
     max-width: 100%;
     height: auto;
+    /* Performance optimizations */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: optimize-contrast;
+    /* Better loading experience */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+img.loaded {
+    opacity: 1;
+}
+
+/* Lazy loading placeholder */
+img[loading="lazy"] {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* WebP support detection */
+.webp img {
+    background-image: none;
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
 }
 
 /* Form validation styles */
@@ -3311,6 +3409,86 @@ body {
   }
 }
 
+/* ===== CROSS-BROWSER COMPATIBILITY ===== */
+
+/* Firefox specific fixes */
+@-moz-document url-prefix() {
+  .navbar {
+    backdrop-filter: blur(12px) saturate(180%);
+  }
+  
+  .hero::before {
+    backdrop-filter: none;
+  }
+}
+
+/* Safari specific fixes */
+@supports (-webkit-appearance: none) {
+  .navbar {
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+  }
+  
+  .portrait-container {
+    -webkit-transform: translateZ(0);
+  }
+}
+
+/* Edge/IE fallbacks */
+@supports not (backdrop-filter: blur(12px)) {
+  .navbar {
+    background: rgba(15, 23, 42, 0.9) !important;
+    backdrop-filter: none;
+  }
+  
+  .about-card,
+  .project-card,
+  .tech-item,
+  .contact-form,
+  .contact-info {
+    background: rgba(255, 255, 255, 0.06);
+    backdrop-filter: none;
+  }
+}
+
+/* CSS Grid fallbacks for older browsers */
+@supports not (display: grid) {
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .skills-categories {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .contact-grid {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Flexbox fallbacks */
+@supports not (display: flex) {
+  .navbar {
+    display: block;
+  }
+  
+  .hero-actions {
+    display: block;
+  }
+  
+  .contact-links {
+    display: block;
+  }
+}
+
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
 
@@ -3321,5 +3499,137 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  
+  .floating-tech-icons {
+    display: none !important;
+  }
+  
+  .tech-icon {
+    animation: none !important;
+  }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+  :root {
+    --bg: #000000;
+    --fg: #ffffff;
+    --accent: #00ff00;
+    --border: #ffffff;
+  }
+  
+  .navbar {
+    background: #000000 !important;
+    border: 2px solid #ffffff;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+    background: #00ff00 !important;
+    color: #000000 !important;
+    border: 2px solid #ffffff;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+  
+  .navbar,
+  .floating-tech-icons,
+  .hero-actions,
+  .scroll-top,
+  .contact-form {
+    display: none !important;
+  }
+  
+  .hero {
+    min-height: auto;
+    page-break-inside: avoid;
+  }
+  
+  .section-title {
+    page-break-after: avoid;
+  }
+  
+  .project-card,
+  .about-card {
+    page-break-inside: avoid;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+  
+  .hero-title,
+  .section-title {
+    color: black !important;
+  }
+}
+
+/* ===== LIGHT/DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: var(--white);
+    --bg-elev: #f8fafc;
+    --surface: rgba(0, 0, 0, 0.04);
+    --surface-strong: rgba(0, 0, 0, 0.06);
+    --fg: var(--black);
+    --muted: rgba(0, 0, 0, 0.78);
+    --muted-2: rgba(0, 0, 0, 0.64);
+    --border: rgba(0, 0, 0, 0.12);
+    --border-strong: rgba(0, 0, 0, 0.18);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: var(--gray-900);
+    --bg-elev: #0b1424;
+    --surface: rgba(255, 255, 255, 0.04);
+    --surface-strong: rgba(255, 255, 255, 0.06);
+    --fg: var(--white);
+    --muted: rgba(255, 255, 255, 0.78);
+    --muted-2: rgba(255, 255, 255, 0.64);
+    --border: rgba(255, 255, 255, 0.12);
+    --border-strong: rgba(255, 255, 255, 0.18);
+  }
+}
+
+/* ===== ADVANCED PERFORMANCE OPTIMIZATIONS ===== */
+.hero-image,
+.project-image,
+.skill-icon {
+  content-visibility: auto;
+  contain-intrinsic-size: 200px;
+}
+
+/* ===== CROSS-BROWSER COMPATIBILITY ===== */
+@supports not (backdrop-filter: blur(12px)) {
+  .navbar {
+    background: rgba(15, 23, 42, 0.95);
+  }
+}
+
+@supports not (display: grid) {
+  .projects-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+  }
+}
+
+@supports not (display: flex) {
+  .hero {
+    display: block;
+    text-align: center;
   }
 }

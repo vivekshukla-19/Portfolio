@@ -340,6 +340,11 @@ const debounce = (func, delay) => {
                         statusDiv.textContent = '✅ Message sent successfully! I\'ll get back to you soon.';
                         statusDiv.className = 'form-status success';
                         contactForm.reset();
+                        
+                        // Announce success to screen readers
+                        if (window.announceToScreenReader) {
+                            window.announceToScreenReader('Message sent successfully');
+                        }
                     } else {
                         throw new Error(result.message || 'Failed to send message');
                     }
@@ -413,24 +418,56 @@ const debounce = (func, delay) => {
 
 // ===== PERFORMANCE OPTIMIZATIONS =====
 (function() {
-    // Lazy load images
-    const images = document.querySelectorAll('img[loading="lazy"]');
+    // Enhanced lazy loading with error handling
+    const images = document.querySelectorAll('img[loading="lazy"], img:not([loading="eager"])');
     
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
-                    img.classList.add('loaded');
+                    
+                    // Handle image loading errors
+                    img.addEventListener('error', () => {
+                        img.style.display = 'none';
+                        console.warn('Failed to load image:', img.src);
+                    });
+                    
+                    // Handle successful loading
+                    img.addEventListener('load', () => {
+                        img.classList.add('loaded');
+                        img.style.opacity = '1';
+                    });
+                    
+                    // If image is already loaded
+                    if (img.complete && img.naturalHeight !== 0) {
+                        img.classList.add('loaded');
+                        img.style.opacity = '1';
+                    }
+                    
                     imageObserver.unobserve(img);
                 }
             });
+        }, {
+            rootMargin: '50px 0px',
+            threshold: 0.01
         });
 
         images.forEach(img => imageObserver.observe(img));
     }
 
-    // Preload critical resources
+    // WebP support detection and optimization
+    function checkWebPSupport() {
+        const webp = new Image();
+        webp.onload = webp.onerror = () => {
+            document.documentElement.classList.add(webp.height === 2 ? 'webp' : 'no-webp');
+        };
+        webp.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+    }
+    
+    checkWebPSupport();
+
+    // Preload critical resources with error handling
     const preloadLinks = [
         'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'
     ];
@@ -444,13 +481,36 @@ const debounce = (func, delay) => {
             this.onload = null;
             this.rel = 'stylesheet';
         };
+        link.onerror = () => {
+            console.warn('Failed to preload resource:', href);
+            // Fallback to regular stylesheet
+            const fallback = document.createElement('link');
+            fallback.rel = 'stylesheet';
+            fallback.href = href;
+            document.head.appendChild(fallback);
+        };
+        document.head.appendChild(link);
+    });
+
+    // Resource hints for better performance
+    const resourceHints = [
+        { rel: 'dns-prefetch', href: '//fonts.googleapis.com' },
+        { rel: 'dns-prefetch', href: '//fonts.gstatic.com' },
+        { rel: 'dns-prefetch', href: '//cdnjs.cloudflare.com' },
+        { rel: 'preconnect', href: 'https://api.web3forms.com' }
+    ];
+
+    resourceHints.forEach(hint => {
+        const link = document.createElement('link');
+        link.rel = hint.rel;
+        link.href = hint.href;
         document.head.appendChild(link);
     });
 })();
 
 // ===== ACCESSIBILITY IMPROVEMENTS =====
 (function() {
-    // Keyboard navigation for custom elements
+    // Enhanced keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             // Close mobile menu if open
@@ -463,15 +523,23 @@ const debounce = (func, delay) => {
                 navToggle.setAttribute('aria-expanded', 'false');
                 navToggle.focus();
             }
+            
+            // Close any open modals or overlays
+            const openElements = document.querySelectorAll('[aria-expanded="true"]');
+            openElements.forEach(element => {
+                element.setAttribute('aria-expanded', 'false');
+                element.focus();
+            });
         }
     });
 
-    // Focus management for better accessibility
-    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    // Enhanced focus management
+    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), [contenteditable]';
     
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Tab') {
-            const focusable = Array.from(document.querySelectorAll(focusableElements));
+            const focusable = Array.from(document.querySelectorAll(focusableElements))
+                .filter(el => !el.disabled && !el.hidden && el.offsetParent !== null);
             const firstFocusable = focusable[0];
             const lastFocusable = focusable[focusable.length - 1];
 
@@ -484,6 +552,66 @@ const debounce = (func, delay) => {
             }
         }
     });
+
+    // ARIA live regions for dynamic content
+    function createLiveRegion() {
+        const liveRegion = document.createElement('div');
+        liveRegion.setAttribute('aria-live', 'polite');
+        liveRegion.setAttribute('aria-atomic', 'true');
+        liveRegion.className = 'sr-only';
+        liveRegion.id = 'live-region';
+        document.body.appendChild(liveRegion);
+    }
+
+    // Announce changes to screen readers
+    function announceToScreenReader(message) {
+        const liveRegion = document.getElementById('live-region');
+        if (liveRegion) {
+            liveRegion.textContent = message;
+            // Clear after announcement
+            setTimeout(() => {
+                liveRegion.textContent = '';
+            }, 1000);
+        }
+    }
+
+    // Enhanced focus indicators
+    function enhanceFocusIndicators() {
+        const style = document.createElement('style');
+        style.textContent = `
+            *:focus-visible {
+                outline: 2px solid #3b82f6 !important;
+                outline-offset: 2px !important;
+                box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3) !important;
+            }
+            
+            /* High contrast mode support */
+            @media (prefers-contrast: high) {
+                *:focus-visible {
+                    outline: 3px solid currentColor !important;
+                    outline-offset: 2px !important;
+                }
+            }
+            
+            /* Reduced motion support */
+            @media (prefers-reduced-motion: reduce) {
+                *, *::before, *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                    scroll-behavior: auto !important;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Initialize accessibility features
+    createLiveRegion();
+    enhanceFocusIndicators();
+
+    // Expose announce function globally for use in other scripts
+    window.announceToScreenReader = announceToScreenReader;
 })();
 
 // ===== ERROR HANDLING =====
@@ -1044,11 +1172,187 @@ const isVerySmallScreen = () => {
     document.addEventListener('DOMContentLoaded', monitorPerformance);
 })();
 
+// ===== CROSS-BROWSER COMPATIBILITY POLYFILLS =====
+(function() {
+    // Polyfill for older browsers that don't support IntersectionObserver
+    if (!('IntersectionObserver' in window)) {
+        console.warn('IntersectionObserver not supported, using fallback');
+        
+        // Simple fallback that shows all images immediately
+        window.IntersectionObserver = function(callback, options) {
+            return {
+                observe: function(target) {
+                    // Immediately trigger intersection for all elements
+                    setTimeout(() => {
+                        callback([{ target: target, isIntersecting: true }]);
+                    }, 100);
+                },
+                unobserve: function() {},
+                disconnect: function() {}
+            };
+        };
+    }
+    
+    // Polyfill for older browsers that don't support fetch
+    if (!('fetch' in window)) {
+        console.warn('Fetch API not supported, using XMLHttpRequest fallback');
+        
+        window.fetch = function(url, options = {}) {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open(options.method || 'GET', url);
+                
+                if (options.headers) {
+                    Object.keys(options.headers).forEach(key => {
+                        xhr.setRequestHeader(key, options.headers[key]);
+                    });
+                }
+                
+                xhr.onload = () => {
+                    resolve({
+                        ok: xhr.status >= 200 && xhr.status < 300,
+                        json: () => Promise.resolve(JSON.parse(xhr.responseText)),
+                        text: () => Promise.resolve(xhr.responseText)
+                    });
+                };
+                
+                xhr.onerror = () => reject(new Error('Network error'));
+                
+                if (options.body) {
+                    xhr.send(options.body);
+                } else {
+                    xhr.send();
+                }
+            });
+        };
+    }
+    
+    // Polyfill for CSS custom properties in older browsers
+    if (!window.CSS || !window.CSS.supports || !window.CSS.supports('color', 'var(--test)')) {
+        console.warn('CSS custom properties not supported, using fallback');
+        
+        // Simple fallback that replaces CSS custom properties with hardcoded values
+        const style = document.createElement('style');
+        style.textContent = `
+            :root {
+                --white: #ffffff;
+                --black: #1a1a1a;
+                --gray-900: #0f172a;
+                --gray-800: #1e293b;
+                --gray-700: #334155;
+                --gray-600: #475569;
+                --gray-500: #64748b;
+                --gray-400: #94a3b8;
+                --gray-300: #cbd5e1;
+                --gray-200: #e2e8f0;
+                --gray-100: #f1f5f9;
+                --gray-50: #f8fafc;
+                --accent: #3b82f6;
+                --accent-contrast: #ffffff;
+                --bg: var(--gray-900);
+                --fg: var(--white);
+                --muted: rgba(255, 255, 255, 0.78);
+                --border: rgba(255, 255, 255, 0.12);
+                --surface: rgba(255, 255, 255, 0.04);
+            }
+        `;
+        document.head.appendChild(style);
+    }
+    
+    // Feature detection and graceful degradation
+    const features = {
+        webp: false,
+        backdropFilter: false,
+        cssGrid: false,
+        flexbox: false,
+        intersectionObserver: 'IntersectionObserver' in window,
+        fetch: 'fetch' in window,
+        promises: 'Promise' in window,
+        asyncAwait: (async () => {}).constructor.name === 'AsyncFunction'
+    };
+    
+    // Detect WebP support
+    const webpTest = new Image();
+    webpTest.onload = webpTest.onerror = () => {
+        features.webp = webpTest.height === 2;
+        document.documentElement.classList.add(features.webp ? 'webp' : 'no-webp');
+    };
+    webpTest.src = 'data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA';
+    
+    // Detect CSS features
+    const testEl = document.createElement('div');
+    testEl.style.display = 'grid';
+    features.cssGrid = testEl.style.display === 'grid';
+    
+    testEl.style.display = 'flex';
+    features.flexbox = testEl.style.display === 'flex';
+    
+    testEl.style.backdropFilter = 'blur(10px)';
+    features.backdropFilter = !!testEl.style.backdropFilter;
+    
+    // Store features globally for use in other scripts
+    window.browserFeatures = features;
+    
+    console.log('Browser features detected:', features);
+})();
+
+// ===== LOADING INDICATOR =====
+(function() {
+    function hideLoadingIndicator() {
+        const loadingIndicator = document.getElementById('loading-indicator');
+        if (loadingIndicator) {
+            loadingIndicator.classList.add('hidden');
+            // Remove from DOM after animation
+            setTimeout(() => {
+                loadingIndicator.remove();
+            }, 300);
+        }
+    }
+
+    // Hide loading indicator when page is fully loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', hideLoadingIndicator);
+    } else {
+        // Page is already loaded
+        hideLoadingIndicator();
+    }
+
+    // Fallback: hide loading indicator after 3 seconds
+    setTimeout(hideLoadingIndicator, 3000);
+})();
+
 // ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
     // Add loaded class to body for CSS transitions
     document.body.classList.add('loaded');
     
+    // Add browser-specific classes for CSS targeting
+    if (window.browserFeatures) {
+        const features = window.browserFeatures;
+        
+        if (!features.cssGrid) {
+            document.body.classList.add('no-css-grid');
+        }
+        
+        if (!features.flexbox) {
+            document.body.classList.add('no-flexbox');
+        }
+        
+        if (!features.backdropFilter) {
+            document.body.classList.add('no-backdrop-filter');
+        }
+        
+        if (!features.webp) {
+            document.body.classList.add('no-webp');
+        }
+    }
+    
     // Initialize any other components here
     console.log('Portfolio website loaded successfully! 🚀');
+    
+    // Hide loading indicator
+    const loadingIndicator = document.getElementById('loading-indicator');
+    if (loadingIndicator) {
+        loadingIndicator.classList.add('hidden');
+    }
 });
