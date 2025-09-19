@@ -2,9 +2,9 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://vivekshukla.dev/sitemap.xml
+Sitemap: https://vivekshukla-19.github.io/Portfolio/sitemap.xml
 
-# Crawl-delay for respectful crawling
+# Optimize crawling
 Crawl-delay: 1
 
 # Allow all search engines
@@ -24,4 +24,13 @@ User-agent: Baiduspider
 Allow: /
 
 User-agent: YandexBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
 Allow: /

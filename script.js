@@ -33,6 +33,53 @@ const debounce = (func, delay) => {
     const navLinks = document.getElementById('navbar-links');
     const navItems = document.querySelectorAll('.navbar-links a');
 
+    // Browser integration - Update page title dynamically
+    function updatePageTitle() {
+        const currentSection = getCurrentSection();
+        if (currentSection && currentSection !== 'home') {
+            document.title = `${currentSection.charAt(0).toUpperCase() + currentSection.slice(1)} - Vivek Shukla Portfolio`;
+        } else {
+            document.title = 'Vivek Shukla - Cloud DevOps Engineer Portfolio | GitHub Pages';
+        }
+    }
+
+    function getCurrentSection() {
+        const sections = ['home', 'about', 'projects', 'contact'];
+        for (const section of sections) {
+            const element = document.getElementById(section);
+            if (element) {
+                const rect = element.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) {
+                    return section;
+                }
+            }
+        }
+        return 'home';
+    }
+
+    // Update title on scroll
+    window.addEventListener('scroll', throttle(updatePageTitle, 500));
+
+    // Close navbar when clicking outside (accessibility improvement)
+    document.addEventListener('click', function(event) {
+        if (navToggle && navLinks && 
+            !navToggle.contains(event.target) && 
+            !navLinks.contains(event.target) &&
+            navLinks.classList.contains('active')) {
+            navToggle.setAttribute('aria-expanded', 'false');
+            navLinks.classList.remove('active');
+        }
+    });
+
+    // Close navbar on escape key (accessibility improvement)
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && navLinks && navLinks.classList.contains('active')) {
+            navToggle.setAttribute('aria-expanded', 'false');
+            navLinks.classList.remove('active');
+            navToggle.focus();
+        }
+    });
+
     // Navbar scroll effect
     const handleScroll = throttle(() => {
         if (window.scrollY > 100) {
@@ -214,9 +261,61 @@ const debounce = (func, delay) => {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
+            // Enhanced validation
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            // Clear previous validation states
+            document.querySelectorAll('.form-input, .form-textarea').forEach(field => {
+                field.classList.remove('error');
+            });
+
+            let hasErrors = false;
+            const errors = [];
+
+            if (!name) {
+                document.getElementById('name').classList.add('error');
+                errors.push('Name is required');
+                hasErrors = true;
+            }
+
+            if (!email) {
+                document.getElementById('email').classList.add('error');
+                errors.push('Email is required');
+                hasErrors = true;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('email').classList.add('error');
+                errors.push('Please enter a valid email address');
+                hasErrors = true;
+            }
+
+            if (!message) {
+                document.getElementById('message').classList.add('error');
+                errors.push('Message is required');
+                hasErrors = true;
+            } else if (message.length < 10) {
+                document.getElementById('message').classList.add('error');
+                errors.push('Message must be at least 10 characters long');
+                hasErrors = true;
+            }
+
+            if (hasErrors) {
+                statusDiv.textContent = `❌ ${errors[0]}`;
+                statusDiv.className = 'form-status error';
+                
+                // Focus on first error field
+                const firstErrorField = document.querySelector('.form-input.error, .form-textarea.error');
+                if (firstErrorField) {
+                    firstErrorField.focus();
+                    firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+            
             // Disable submit button and show loading state
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Sending...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
             statusDiv.textContent = '';
             statusDiv.className = 'form-status';
 

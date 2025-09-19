@@ -1,12 +1,16 @@
 {
-    "name": "Vivek Shukla Portfolio",
+    "name": "Vivek Shukla - Cloud DevOps Engineer Portfolio",
     "short_name": "Vivek Shukla",
-    "description": "Portfolio website showcasing Cloud Computing, DevOps, and Web Development projects",
-    "start_url": "/",
+    "description": "Expert Cloud DevOps Engineer & Python Developer. BCA Graduate showcasing AWS, Docker, Kubernetes projects and modern web development solutions.",
+    "start_url": "/Portfolio/",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#4299e1",
+    "background_color": "#0a0a0a",
+    "theme_color": "#3b82f6",
     "orientation": "portrait-primary",
+    "scope": "/Portfolio/",
+    "lang": "en",
+    "dir": "ltr",
+    "categories": ["portfolio", "developer", "cloud", "devops"],
     "icons": [
         {
             "src": "vs-img.png",
@@ -19,14 +23,15 @@
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
-        },
-        {
-            "src": "vs-img.png",
-            "sizes": "180x180",
-            "type": "image/png"
         }
     ],
-    "categories": ["portfolio", "technology", "education"],
-    "lang": "en",
-    "dir": "ltr"
+    "screenshots": [
+        {
+            "src": "vs-img.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Vivek Shukla Portfolio Homepage"
+        }
+    ]
 }
