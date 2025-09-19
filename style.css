@@ -537,6 +537,7 @@ textarea:focus-visible,
   display: flex;
   gap: var(--space-4);
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 /* ===== HERO VISUAL (force static) ===== */
