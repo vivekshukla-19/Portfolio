@@ -269,7 +269,8 @@
                                  decoding="async"
                                  fetchpriority="high" 
                                  onload="this.style.opacity='1'"
-                                 style="opacity:0;transition:opacity 0.3s ease" />
+                                 onerror="this.style.opacity='1'"
+                                 style="opacity:0;transition:opacity 0.3s ease;will-change:opacity" />
                         </div>
                     </div>
                 </div>
@@ -298,14 +299,14 @@
                 <article class="about-card">
                     <h3 class="card-title">Skills</h3>
                     <div class="skills-grid">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">HTML</span>
-                        <span class="skill-tag">CSS</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">AWS</span>
-                        <span class="skill-tag">React</span>
+                        <span class="skill-tag" style="font-size: 1.7rem;"  > <i class="fa-brands fa-python" aria-hidden="true"> </i>  </span>
+                        <span class="skill-tag" style="font-size: 1.7rem;"> <i class="fa-brands fa-html5" aria-hidden="true"></i>  </span>
+                        <span class="skill-tag" style="font-size: 1.7rem;"> <i class="fa-brands fa-css3-alt" aria-hidden="true"></i>  </span>
+                        <span class="skill-tag" style="font-size: 1.7rem;"> <i class="fa-brands fa-js" aria-hidden="true"></i>  </span>
+                        <span class="skill-tag" style="font-size: 1.7rem;"> <i class="fa-brands fa-docker" aria-hidden="true"></i>  </span>
+                        <span class="skill-tag" style="font-size: 1.7rem;"> <i class="fa-brands fa-git-alt" aria-hidden="true"></i>  </span>
+                        <span class="skill-tag" style="font-size: 1.7rem;"> <i class="fa-brands fa-aws" aria-hidden="true"></i>  </span>
+                        <span class="skill-tag" style="font-size: 1.7rem;"> <i class="fa-brands fa-react" aria-hidden="true"></i>  </span>
                     </div>
                 </article>
             </div>
@@ -507,63 +508,205 @@
                 </div>
             </div>
             
-        <div class="tech-stack">
-            <div class="tech-item">
-                <i class="fa-brands fa-python" aria-hidden="true"></i>
-                <span>Python</span>
+        <!-- Categorized Skills Section -->
+        <div class="skills-categories">
+            
+            <!-- Frontend Development -->
+            <div class="skill-category" role="region" aria-labelledby="frontend-title">
+                <div class="category-header">
+                    <div class="category-icon" aria-hidden="true">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="category-title" id="frontend-title">Frontend Development</h3>
+                </div>
+                <div class="category-skills">
+                    <div class="tech-item">
+                        <i class="fab fa-html5" aria-hidden="true"></i>
+                        <span>HTML5</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-css3-alt" aria-hidden="true"></i>
+                        <span>CSS3</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-js" aria-hidden="true"></i>
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-react" aria-hidden="true"></i>
+                        <span>React</span>
+                    </div>
+                </div>
             </div>
-            <div class="tech-item">
-                <i class="fa-brands fa-html5" aria-hidden="true"></i>
-                <span>HTML</span>
+
+            <!-- Backend Development -->
+            <div class="skill-category" role="region" aria-labelledby="backend-title">
+                <div class="category-header">
+                    <div class="category-icon" aria-hidden="true">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3 class="category-title" id="backend-title">Backend Development</h3>
+                </div>
+                <div class="category-skills">
+                    <div class="tech-item">
+                        <i class="fab fa-node-js" aria-hidden="true"></i>
+                        <span>Node.js</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-code" aria-hidden="true"></i>
+                        <span>Express.js</span>
+                    </div>
+                </div>
             </div>
-            <div class="tech-item">
-                <i class="fa-brands fa-css3-alt" aria-hidden="true"></i>
-                <span>CSS</span>
+
+            <!-- Programming Languages -->
+            <div class="skill-category" role="region" aria-labelledby="programming-title">
+                <div class="category-header">
+                    <div class="category-icon" aria-hidden="true">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="category-title" id="programming-title">Programming Languages</h3>
+                </div>
+                <div class="category-skills">
+                    <div class="tech-item">
+                        <i class="fab fa-python" aria-hidden="true"></i>
+                        <span>Python + DSA</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-js" aria-hidden="true"></i>
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-copyright" aria-hidden="true"></i>
+                        <span>C</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                        <span>C++</span>
+                    </div>
+                </div>
             </div>
-            <div class="tech-item">
-                <i class="fa-brands fa-js" aria-hidden="true"></i>
-                <span>JavaScript</span>
+
+            <!-- Cloud & Infrastructure -->
+            <div class="skill-category" role="region" aria-labelledby="cloud-title">
+                <div class="category-header">
+                    <div class="category-icon" aria-hidden="true">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3 class="category-title" id="cloud-title">Cloud & Infrastructure</h3>
+                </div>
+                <div class="category-skills">
+                    <div class="tech-item">
+                        <i class="fab fa-aws" aria-hidden="true"></i>
+                        <span>AWS</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-google" aria-hidden="true"></i>
+                        <span>Google Cloud</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-server" aria-hidden="true"></i>
+                        <span>EC2</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-hdd" aria-hidden="true"></i>
+                        <span>S3</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-bolt" aria-hidden="true"></i>
+                        <span>Lambda</span>
+                    </div>
+                </div>
             </div>
-            <div class="tech-item">
-                <i class="fa-brands fa-react" aria-hidden="true"></i>
-                <span>React</span>
+
+            <!-- DevOps & Tools -->
+            <div class="skill-category" role="region" aria-labelledby="devops-title">
+                <div class="category-header">
+                    <div class="category-icon" aria-hidden="true">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="category-title" id="devops-title">DevOps & Tools</h3>
+                </div>
+                <div class="category-skills">
+                    <div class="tech-item">
+                        <i class="fab fa-docker" aria-hidden="true"></i>
+                        <span>Docker</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-cubes" aria-hidden="true"></i>
+                        <span>Kubernetes</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-gears" aria-hidden="true"></i>
+                        <span>CI/CD</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-github-alt" aria-hidden="true"></i>
+                        <span>GitHub Actions</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-chart-line" aria-hidden="true"></i>
+                        <span>Monitoring</span>
+                    </div>
+                </div>
             </div>
-            <div class="tech-item">
-                <i class="fa-brands fa-node-js" aria-hidden="true"></i>
-                <span>Node JS</span>
+
+            <!-- Development Tools -->
+            <div class="skill-category" role="region" aria-labelledby="tools-title">
+                <div class="category-header">
+                    <div class="category-icon" aria-hidden="true">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h3 class="category-title" id="tools-title">Development Tools</h3>
+                </div>
+                <div class="category-skills">
+                    <div class="tech-item">
+                        <i class="fab fa-git-alt" aria-hidden="true"></i>
+                        <span>Git</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-github" aria-hidden="true"></i>
+                        <span>GitHub</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-code" aria-hidden="true"></i>
+                        <span>VS Code</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-terminal" aria-hidden="true"></i>
+                        <span>Terminal</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-bug" aria-hidden="true"></i>
+                        <span>Debugging</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-flask" aria-hidden="true"></i>
+                        <span>Testing</span>
+                    </div>
+                </div>
             </div>
-            <div class="tech-item">
-                <i class="fa-solid fa-code" aria-hidden="true"></i>
-                <span>VS Code</span>
+
+            <!-- Databases -->
+            <div class="skill-category" role="region" aria-labelledby="database-title">
+                <div class="category-header">
+                    <div class="category-icon" aria-hidden="true">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="category-title" id="database-title">Databases</h3>
+                </div>
+                <div class="category-skills centered-skills">
+                    <div class="tech-item">
+                        <i class="fas fa-database" aria-hidden="true"></i>
+                        <span>MySQL</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-leaf" aria-hidden="true"></i>
+                        <span>MongoDB</span>
+                    </div>
+                </div>
             </div>
-            <div class="tech-item">
-                <i class="fa-brands fa-git-alt" aria-hidden="true"></i>
-                <span>Git/GitHub</span>
-            </div>
-            <div class="tech-item">
-                <i class="fa-solid fa-terminal" aria-hidden="true"></i>
-                <span>Bash</span>
-            </div>
-            <div class="tech-item">
-                <i class="fa-solid fa-gears" aria-hidden="true"></i>
-                <span>CI/CD</span>
-            </div>
-            <div class="tech-item">
-                <i class="fa-solid fa-cubes" aria-hidden="true"></i>
-                <span>Kubernetes</span>
-            </div>
-            <div class="tech-item">
-                <i class="fa-brands fa-docker" aria-hidden="true"></i>
-                <span>Docker</span>
-            </div>
-            <div class="tech-item">
-                <i class="fa-brands fa-aws" aria-hidden="true"></i>
-                <span>AWS</span>
-            </div>
-            <div class="tech-item">
-                <i class="fa-solid fa-database" aria-hidden="true"></i>
-                <span>SQL</span>
-            </div>
+
         </div>
         </div>
     </section>
@@ -604,21 +747,27 @@
                 <p class="section-description">Feel free to reach out for collaborations or opportunities.</p>
             </div>
             <div class="contact-grid">
-                <form class="contact-form" id="contact-form">
+                <form class="contact-form" id="contact-form" novalidate>
                     <div class="form-group">
                         <label for="name" class="visually-hidden">Your Name</label>
                         <input id="name" type="text" name="name" placeholder="Your Name" class="form-input" 
-                               aria-required="true" required autocomplete="name" />
+                               aria-required="true" required autocomplete="name" 
+                               aria-describedby="name-error" />
+                        <div id="name-error" class="error-message" role="alert" aria-live="polite"></div>
                     </div>
                     <div class="form-group">
                         <label for="email" class="visually-hidden">Email Address</label>
                         <input id="email" type="email" name="email" placeholder="Email Address" class="form-input"
-                               aria-required="true" required autocomplete="email" inputmode="email" />
+                               aria-required="true" required autocomplete="email" inputmode="email" 
+                               aria-describedby="email-error" />
+                        <div id="email-error" class="error-message" role="alert" aria-live="polite"></div>
                     </div>
                     <div class="form-group">
                         <label for="message" class="visually-hidden">Write your message</label>
                         <textarea id="message" name="message" placeholder="Write your message..." 
-                                  class="form-textarea" aria-required="true" minlength="10" required></textarea>
+                                  class="form-textarea" aria-required="true" minlength="10" required
+                                  aria-describedby="message-error"></textarea>
+                        <div id="message-error" class="error-message" role="alert" aria-live="polite"></div>
                     </div>
                     <!-- Web3Forms required hidden fields -->
                     <input type="hidden" name="access_key" value="a1ea9203-d073-4ba9-a65d-b1c94c0b5f4d" />
