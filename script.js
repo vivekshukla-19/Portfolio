@@ -150,7 +150,7 @@ const debounce = (func, delay) => {
     
     if (scrollTopBtn) {
         const toggleScrollTop = throttle(() => {
-            if (window.scrollY > 500) {
+            if (window.scrollY > 100) {
                 scrollTopBtn.classList.add('visible');
             } else {
                 scrollTopBtn.classList.remove('visible');

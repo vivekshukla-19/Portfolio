@@ -265,14 +265,10 @@
     }
     </script>
     
-    <!-- Universal Favicon and Icons - All Browser Support -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <!-- Optimized Favicon Setup -->
+    <link rel="icon" type="image/x-icon" href="vs-img.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="vs-img.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="vs-img.png" />
-    <link rel="icon" type="image/png" sizes="48x48" href="vs-img.png" />
-    <link rel="icon" type="image/png" sizes="72x72" href="vs-img.png" />
-    <link rel="icon" type="image/png" sizes="96x96" href="vs-img.png" />
-    <link rel="icon" type="image/png" sizes="144x144" href="vs-img.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="vs-img.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="vs-img.png" />
     
@@ -295,8 +291,8 @@
     <link rel="mask-icon" href="vs-img.png" color="#3b82f6" />
     
     <!-- Legacy Browser Support -->
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="bookmark" href="favicon.ico" />
+    <link rel="shortcut icon" href="vs-img.png" />
+    <link rel="bookmark" href="vs-img.png" />
     
     <!-- DNS Prefetch for performance -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
@@ -328,9 +324,11 @@
     <!-- Critical CSS loaded immediately -->
     <link rel="stylesheet" href="style.css" media="all" />
     
-    <!-- Google Fonts with optimized loading -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
+    <!-- Optimized Google Fonts Loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
     
     <!-- Font Awesome CDN - Preloaded for speed -->
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -340,12 +338,12 @@
     <link rel="preload" as="image" href="vs-img.png" type="image/png" fetchpriority="high" />
     
     <!-- Enhanced Security Headers -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' https://api.web3forms.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.web3forms.com https://www.google-analytics.com https://analytics.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; upgrade-insecure-requests;" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=(), browsing-topics=()" />
     <meta http-equiv="Cross-Origin-Embedder-Policy" content="unsafe-none" />
     <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
     <meta http-equiv="Cross-Origin-Resource-Policy" content="cross-origin" />
@@ -353,7 +351,10 @@
 
     <body itemscope itemtype="https://schema.org/WebPage">
         <!-- Skip to main content for accessibility -->
-        <a href="#main-content" class="skip-link">Skip to main content</a>
+        <a href="#main-content" class="skip-link" tabindex="1">Skip to main content</a>
+        
+        <!-- Screen reader announcement for dynamic content -->
+        <div id="sr-announcements" class="sr-only" aria-live="polite" aria-atomic="true"></div>
         
         <!-- Loading indicator for better UX -->
         <div id="loading-indicator" class="loading-indicator" aria-hidden="true">
@@ -402,7 +403,10 @@
             <div class="hero-content">
                 <div class="hero-text">
                     <span class="hero-path">&gt; Cloud • DevOps • Web Dev • Python</span>
-                    <h1 class="hero-title">Hi, I'm Vivek Shukla<br>Cloud & DevOps Enthusiast</h1>
+                    <h1 class="hero-title">
+                        <span class="hero-line line-1">Hi, I'm Vivek Shukla</span>
+                        <span class="hero-line line-2">Cloud & DevOps Enthusiast</span>
+                    </h1>
                     <p class="hero-subtitle"><span id="typed-text"></span><span class="cursor"></span></p>
                     <div class="hero-actions">
                         <a href="#projects" class="btn btn-primary" aria-label="View my projects">View Projects</a>
@@ -421,7 +425,8 @@
                                  fetchpriority="high" 
                                  onload="this.style.opacity='1'"
                                  style="opacity:0;transition:opacity 0.3s ease"
-                                 itemprop="image" />
+                                 itemprop="image"
+                                 class="hero-image" />
                         </div>
                     </div>
                 </div>
