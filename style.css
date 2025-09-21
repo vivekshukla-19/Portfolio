@@ -3547,6 +3547,87 @@ body {
   }
 }
 
+/* ===== COMPREHENSIVE DARK MODE ENFORCEMENT ===== */
+/* This section ensures dark mode is ALWAYS applied regardless of any other CSS rules */
+
+/* Global dark mode enforcement - highest priority */
+html[data-theme="dark"],
+html.dark-theme,
+html {
+  color-scheme: dark !important;
+  background: #0f172a !important;
+  color: #ffffff !important;
+}
+
+body[data-theme="dark"],
+body.dark-theme,
+body {
+  color-scheme: dark !important;
+  background: #0f172a !important;
+  color: #ffffff !important;
+}
+
+/* Ensure all elements inherit dark mode */
+*[data-theme="dark"],
+*.dark-theme,
+* {
+  color-scheme: dark !important;
+}
+
+/* Force dark mode on all possible elements that might be affected by system preferences */
+div, span, p, h1, h2, h3, h4, h5, h6, 
+a, button, input, textarea, select, 
+nav, header, footer, main, section, article, aside,
+form, label, fieldset, legend, table, tr, td, th,
+ul, ol, li, dl, dt, dd,
+img, canvas, svg, video, audio,
+iframe, embed, object {
+  color-scheme: dark !important;
+}
+
+/* Override any media queries that might try to apply light mode */
+@media screen, print, (prefers-color-scheme: light), (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark only !important;
+    --bg: #0f172a !important;
+    --fg: #ffffff !important;
+  }
+  
+  html, body {
+    color-scheme: dark !important;
+    background: #0f172a !important;
+    color: #ffffff !important;
+  }
+  
+  * {
+    color-scheme: dark !important;
+  }
+}
+
+/* Final enforcement - this should override everything */
+html, body, * {
+  color-scheme: dark !important;
+}
+
+/* Browser-specific overrides */
+@-moz-document url-prefix() {
+  html, body, * {
+    color-scheme: dark !important;
+  }
+}
+
+@supports (-webkit-appearance: none) {
+  html, body, * {
+    color-scheme: dark !important;
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  html, body, * {
+    color-scheme: dark !important;
+  }
+}
+
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
 
@@ -3633,32 +3714,101 @@ body {
   }
 }
 
-/* ===== LIGHT/DARK MODE SUPPORT ===== */
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg: var(--white);
-    --bg-elev: #f8fafc;
-    --surface: rgba(0, 0, 0, 0.04);
-    --surface-strong: rgba(0, 0, 0, 0.06);
-    --fg: var(--black);
-    --muted: rgba(0, 0, 0, 0.78);
-    --muted-2: rgba(0, 0, 0, 0.64);
-    --border: rgba(0, 0, 0, 0.12);
-    --border-strong: rgba(0, 0, 0, 0.18);
-  }
+/* ===== PERMANENT DARK MODE - IGNORE SYSTEM PREFERENCES ===== */
+/* Force dark mode regardless of system preference */
+:root {
+  /* Override any light mode detection */
+  color-scheme: dark only !important;
+  
+  /* Ensure dark mode variables are always applied */
+  --bg: var(--gray-900) !important;
+  --bg-elev: #0b1424 !important;
+  --surface: rgba(255, 255, 255, 0.04) !important;
+  --surface-strong: rgba(255, 255, 255, 0.06) !important;
+  --fg: var(--white) !important;
+  --muted: rgba(255, 255, 255, 0.78) !important;
+  --muted-2: rgba(255, 255, 255, 0.64) !important;
+  --border: rgba(255, 255, 255, 0.12) !important;
+  --border-strong: rgba(255, 255, 255, 0.18) !important;
 }
 
-@media (prefers-color-scheme: dark) {
+/* Force dark mode for all elements */
+*,
+*::before,
+*::after {
+  color-scheme: dark !important;
+}
+
+html {
+  color-scheme: dark !important;
+  background: var(--bg) !important;
+}
+
+body {
+  color-scheme: dark !important;
+  background: var(--bg) !important;
+  color: var(--fg) !important;
+}
+
+/* Force dark mode for form elements */
+input,
+textarea,
+select,
+button {
+  color-scheme: dark !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  color: var(--fg) !important;
+  border-color: var(--border) !important;
+}
+
+/* Force dark mode for webkit elements */
+::-webkit-scrollbar {
+  background: var(--bg) !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong) !important;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface) !important;
+}
+
+/* Force dark mode for selection */
+::selection {
+  background: rgba(59, 130, 246, 0.3) !important;
+  color: var(--fg) !important;
+}
+
+::-moz-selection {
+  background: rgba(59, 130, 246, 0.3) !important;
+  color: var(--fg) !important;
+}
+
+/* Override any potential light mode styles */
+@media (prefers-color-scheme: light) {
   :root {
-    --bg: var(--gray-900);
-    --bg-elev: #0b1424;
-    --surface: rgba(255, 255, 255, 0.04);
-    --surface-strong: rgba(255, 255, 255, 0.06);
-    --fg: var(--white);
-    --muted: rgba(255, 255, 255, 0.78);
-    --muted-2: rgba(255, 255, 255, 0.64);
-    --border: rgba(255, 255, 255, 0.12);
-    --border-strong: rgba(255, 255, 255, 0.18);
+    /* Force dark mode even when system prefers light */
+    color-scheme: dark only !important;
+    --bg: var(--gray-900) !important;
+    --bg-elev: #0b1424 !important;
+    --surface: rgba(255, 255, 255, 0.04) !important;
+    --surface-strong: rgba(255, 255, 255, 0.06) !important;
+    --fg: var(--white) !important;
+    --muted: rgba(255, 255, 255, 0.78) !important;
+    --muted-2: rgba(255, 255, 255, 0.64) !important;
+    --border: rgba(255, 255, 255, 0.12) !important;
+    --border-strong: rgba(255, 255, 255, 0.18) !important;
+  }
+  
+  html, body {
+    color-scheme: dark !important;
+    background: var(--gray-900) !important;
+    color: var(--white) !important;
+  }
+  
+  * {
+    color-scheme: dark !important;
   }
 }
 

@@ -73,19 +73,18 @@
     <meta property="twitter:creator" content="@vivekshukla19" />
     <meta property="twitter:site" content="@vivekshukla19" />
     
-    <!-- Additional SEO Meta Tags -->
-    <meta name="theme-color" content="#3b82f6" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
-    <meta name="msapplication-TileColor" content="#3b82f6" />
+    <!-- Force Dark Mode Meta Tags -->
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="msapplication-TileColor" content="#0f172a" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
     <meta name="application-name" content="Vivek Shukla Portfolio" />
     <meta name="apple-mobile-web-app-title" content="Vivek Shukla" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    
-    <!-- Enhanced Browser Support -->
-    <meta name="color-scheme" content="light dark" />
-    <meta name="supported-color-schemes" content="light dark" />
+
+    <!-- Force Dark Mode Only -->
+    <meta name="color-scheme" content="dark only" />
+    <meta name="supported-color-schemes" content="dark" />
     
     <!-- Opera and Legacy Browser Support -->
     <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
@@ -1031,6 +1030,69 @@
     <button id="scrollTop" class="scroll-top" aria-label="Scroll to top">
         <i class="fas fa-arrow-up" aria-hidden="true"></i>
     </button>
+
+    <!-- Force Dark Mode JavaScript - Must load immediately -->
+    <script>
+        // Force dark mode immediately to prevent any light mode flash
+        (function() {
+            // Override system color scheme detection
+            const originalMatchMedia = window.matchMedia;
+            window.matchMedia = function(query) {
+                // Always return false for light mode queries
+                if (query.includes('prefers-color-scheme: light')) {
+                    return {
+                        matches: false,
+                        media: query,
+                        onchange: null,
+                        addEventListener: function() {},
+                        removeEventListener: function() {},
+                        dispatchEvent: function() { return true; }
+                    };
+                }
+                // Always return true for dark mode queries
+                if (query.includes('prefers-color-scheme: dark')) {
+                    return {
+                        matches: true,
+                        media: query,
+                        onchange: null,
+                        addEventListener: function() {},
+                        removeEventListener: function() {},
+                        dispatchEvent: function() { return true; }
+                    };
+                }
+                // For other queries, use original function
+                return originalMatchMedia.call(this, query);
+            };
+
+            // Force dark mode on document
+            document.documentElement.style.colorScheme = 'dark';
+            document.documentElement.setAttribute('data-theme', 'dark');
+            
+            // Set dark theme class if needed
+            document.documentElement.classList.add('dark-theme');
+            document.documentElement.classList.remove('light-theme');
+            
+            // Override any CSS that might try to detect system preference
+            const style = document.createElement('style');
+            style.textContent = `
+                :root { color-scheme: dark !important; }
+                * { color-scheme: dark !important; }
+                html { color-scheme: dark !important; background: #0f172a !important; }
+                body { color-scheme: dark !important; background: #0f172a !important; color: #ffffff !important; }
+                @media (prefers-color-scheme: light) {
+                    :root, *, html, body { color-scheme: dark !important; }
+                    html, body { background: #0f172a !important; color: #ffffff !important; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Ensure dark mode persists after page load
+            document.addEventListener('DOMContentLoaded', function() {
+                document.documentElement.style.colorScheme = 'dark';
+                document.body.style.colorScheme = 'dark';
+            });
+        })();
+    </script>
 
     <!-- Main JS - Optimized for speed -->
     <script src="script.js" defer></script>
